@@ -21,7 +21,7 @@ export const ui = {
 
     'theme.toggle': 'Cambiar entre claro y oscuro',
 
-    'hero.pill': 'Mira a Madu explicarlo en dos minutos y medio',
+    'hero.pill': 'Mira a Madu explicarlo en dos minutos',
     'hero.title.line1': 'Conocimiento sobre tu código,',
     'hero.title.line2': 'desde la terminal.',
     'hero.lead':
@@ -38,7 +38,7 @@ export const ui = {
     'video.eyebrow': 'Video',
     'video.title': 'Kimün explicado por Madu',
     'video.body':
-      'Dos minutos y medio para ver qué mide, cómo se usa y por qué importa. Madu es machi: la que guarda el conocimiento de su pueblo.',
+      'Dos minutos para ver qué mide, cómo se usa y por qué importa. Madu es machi: la que guarda el conocimiento de su pueblo.',
     'video.other': 'Watch it in English',
     'video.unsupported': 'Tu navegador no reproduce este video. Puedes descargarlo:',
 
@@ -51,7 +51,7 @@ export const ui = {
       'De A++ a F--, calculada con cinco dimensiones: complejidad cognitiva, duplicación, indentación, esfuerzo de Halstead y tamaño de los archivos. Y la lista de archivos que conviene mirar primero.',
     'features.static.title': 'Un comando para cada medida',
     'features.static.body':
-      'Líneas de código en más de cuarenta lenguajes, código duplicado, complejidad ciclomática y cognitiva, índice de mantenibilidad, malos olores y dependencias entre archivos.',
+      'Líneas de código en más de cuarenta lenguajes, código duplicado, complejidad ciclomática y cognitiva, índice de mantenibilidad, code smells y dependencias entre archivos.',
     'features.history.title': 'La historia, leída desde git',
     'features.history.body':
       'Hotspots: archivos complejos que cambian seguido. Mapa de conocimiento: quién domina cada archivo. Acoplamiento temporal: archivos que cambian siempre juntos, aunque el código no lo diga.',
@@ -81,7 +81,7 @@ export const ui = {
     'cmd.indent': 'Complejidad por indentación',
     'cmd.hal': 'Métricas de Halstead',
     'cmd.mi': 'Índice de mantenibilidad, en dos variantes (mi y miv)',
-    'cmd.smells': 'Malos olores: funciones largas, números mágicos, deuda pendiente',
+    'cmd.smells': 'Code smells: funciones largas, números mágicos, deuda pendiente',
     'cmd.deps': 'Dependencias entre archivos y sus ciclos',
     'cmd.report': 'Un informe con todas las métricas juntas',
     'cmd.hotspots': 'Archivos complejos que cambian seguido',
@@ -157,7 +157,7 @@ export const ui = {
 
     'theme.toggle': 'Switch between light and dark',
 
-    'hero.pill': 'Watch Madu explain it in two and a half minutes',
+    'hero.pill': 'Watch Madu explain it in two minutes',
     'hero.title.line1': 'Knowledge about your code,',
     'hero.title.line2': 'from the terminal.',
     'hero.lead':
@@ -174,7 +174,7 @@ export const ui = {
     'video.eyebrow': 'Video',
     'video.title': 'Kimün, explained by Madu',
     'video.body':
-      'Two and a half minutes on what it measures, how you use it and why it matters. Madu is a machi: the one who holds the knowledge of her people.',
+      'Two minutes on what it measures, how you use it and why it matters. Madu is a machi: the one who holds the knowledge of her people.',
     'video.other': 'Míralo en español',
     'video.unsupported': 'Your browser cannot play this video. You can download it:',
 
