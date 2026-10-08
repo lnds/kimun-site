@@ -1,6 +1,6 @@
 # kimun-site
 
-The website of [Kimün](https://github.com/lnds/kimun), in Spanish and English.
+The website of [Kimün](https://github.com/lnds/kimun), in Spanish and English: [kimun.tools](https://kimun.tools).
 
 Built with [Astro](https://astro.build). Spanish lives at the root and English under `/en/`.
 
@@ -11,12 +11,9 @@ npm run build    # static site in dist/
 npm run preview
 ```
 
-## Before the first deploy
-
-Set the address of the site in `site.config.mjs`. Canonical links and the social card are built from it.
-
 ## Where things are
 
+- `site.config.mjs`: the address of the site; canonical links and the social card are built from it.
 - `src/i18n/ui.ts`: every text of the site, in both languages.
 - `src/lib/output.ts`: the terminal output shown on the pages.
 - `src/lib/links.ts`: external links, install commands and the videos.
