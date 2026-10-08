@@ -1,0 +1,59 @@
+---
+interface Props {
+  /** What the tab says: usually the command that was run. */
+  title: string;
+  /** What it printed, as HTML: the spans carry the colors of the terminal. */
+  html: string;
+  /** A line under the output, for where it comes from. */
+  note?: string;
+}
+const { title, html, note } = Astro.props;
+---
+
+<figure class="terminal">
+  <figcaption class="tab-bar">
+    <span class="tab">{title}</span>
+  </figcaption>
+  <pre><code set:html={html} /></pre>
+  {note && <p class="note">{note}</p>}
+</figure>
+
+<style>
+  .terminal {
+    margin: 0;
+    min-width: 0;
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+  .tab-bar {
+    display: flex;
+    border-bottom: 1px solid var(--code-border);
+    background: rgba(255, 255, 255, 0.03);
+  }
+  .tab {
+    padding: 0.6rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: rgba(241, 236, 245, 0.8);
+    border-bottom: 2px solid var(--accent-soft);
+    margin-bottom: -1px;
+  }
+  pre {
+    margin: 0;
+    border-radius: 0;
+    background: transparent;
+    padding: var(--space-4) var(--space-6);
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+  .note {
+    margin: 0;
+    padding: var(--space-2) var(--space-6) var(--space-3);
+    border-top: 1px solid var(--code-border);
+    font-size: 0.74rem;
+    color: var(--term-dim);
+  }
+</style>

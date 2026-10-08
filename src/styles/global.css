@@ -1,0 +1,437 @@
+/* kimün — global tokens & resets. The palette comes from Madu: the pink
+   of her trarilonko, the brown of her coat, the dark of her cloak. */
+
+:root {
+  color-scheme: light dark;
+
+  /* Light theme */
+  --bg: #fbf6f1;
+  --bg-elevated: #ffffff;
+  --bg-subtle: #f3e9e0;
+  --fg: #2a1a24;
+  --fg-muted: #6b5a63;
+  --fg-subtle: #94838c;
+  --border: #e4d5c8;
+  --border-strong: #c9b3a2;
+  --accent: #c2185b;
+  --accent-soft: #e6306f;
+  --accent-warm: #8b5a48;
+  --accent-fg: #ffffff;
+  --code-bg: #1a1322;
+  --code-fg: #f1ecf5;
+  --code-border: #3a2c48;
+  --grid-line: rgba(139, 90, 72, 0.08);
+  --shadow-lg: 0 24px 60px -28px rgba(42, 26, 36, 0.45);
+
+  /* What a terminal prints, on the code background of either theme. */
+  --term-dim: #a99db8;
+  --term-pink: #ff6f9f;
+  --term-green: #3ddc84;
+  --term-amber: #ffb627;
+  --term-red: #ff5263;
+  --term-blue: #7cc4ff;
+
+  /* Typography */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    system-ui, sans-serif;
+  --font-serif: "Source Serif 4", "Source Serif Pro", Cambria, Georgia, serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "SF Mono", Consolas,
+    "Liberation Mono", Menlo, monospace;
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+
+  /* Layout */
+  --max-width: 1200px;
+  --content-width: 72ch;
+  --radius: 6px;
+  --radius-lg: 12px;
+}
+
+/* Dark palette. Applied when the system asks for it, unless the reader has
+   explicitly chosen light; and always when they have explicitly chosen dark.
+   The two selectors carry the same tokens on purpose: one answers the OS,
+   the other answers the toggle, and the toggle has to win either way. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #1a1322;
+    --bg-elevated: #221930;
+    --bg-subtle: #2a1f3a;
+    --fg: #f6f2f8;
+    --fg-muted: #a99db8;
+    --fg-subtle: #7c7089;
+    --border: #3a2c48;
+    --border-strong: #54426a;
+    --accent: #ff6f9f;
+    --accent-soft: #e6306f;
+    --accent-warm: #d9a892;
+    --accent-fg: #1a1322;
+    --code-bg: #100b18;
+    --code-fg: #f1ecf5;
+    --code-border: #3a2c48;
+    --grid-line: rgba(255, 255, 255, 0.04);
+    --shadow-lg: 0 24px 60px -28px rgba(0, 0, 0, 0.8);
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg: #1a1322;
+  --bg-elevated: #221930;
+  --bg-subtle: #2a1f3a;
+  --fg: #f6f2f8;
+  --fg-muted: #a99db8;
+  --fg-subtle: #7c7089;
+  --border: #3a2c48;
+  --border-strong: #54426a;
+  --accent: #ff6f9f;
+  --accent-soft: #e6306f;
+  --accent-warm: #d9a892;
+  --accent-fg: #1a1322;
+  --code-bg: #100b18;
+  --code-fg: #f1ecf5;
+  --code-border: #3a2c48;
+  --grid-line: rgba(255, 255, 255, 0.04);
+  --shadow-lg: 0 24px 60px -28px rgba(0, 0, 0, 0.8);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0 0 var(--space-4);
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); }
+h3 { font-size: clamp(1.15rem, 2vw, 1.5rem); }
+
+p {
+  margin: 0 0 var(--space-4);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 120ms ease;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+code,
+pre {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  /* JetBrains Mono draws -> as an arrow and |> as a triangle. Code has to
+     show the characters that were typed, so the ligatures are turned off. */
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+}
+
+pre {
+  background: var(--code-bg);
+  color: var(--code-fg);
+  padding: var(--space-4);
+  border-radius: var(--radius);
+  overflow-x: auto;
+  line-height: 1.55;
+  font-size: 0.85rem;
+}
+
+pre code {
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+}
+
+:not(pre) > code {
+  background: var(--bg-subtle);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.92em;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.prose {
+  max-width: var(--content-width);
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.prose h2,
+.prose h3 {
+  font-family: var(--font-sans);
+  margin-top: var(--space-12);
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.7rem 1.25rem;
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 1px solid var(--accent);
+  cursor: pointer;
+  transition: opacity 120ms ease, transform 120ms ease;
+}
+
+.btn:hover {
+  text-decoration: none;
+  opacity: 0.92;
+}
+
+.btn.secondary {
+  background: transparent;
+  color: var(--fg);
+  border-color: var(--border-strong);
+}
+
+.btn.secondary:hover {
+  background: var(--bg-subtle);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Warm glow over a faint grid, fading out downward. */
+.backdrop {
+  position: relative;
+  isolation: isolate;
+}
+.backdrop::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: min(100%, 36rem);
+  z-index: -1;
+  background:
+    radial-gradient(
+      48rem 30rem at 85% 10%,
+      color-mix(in srgb, var(--accent-soft) 22%, transparent),
+      transparent 70%
+    ),
+    linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0 / 100% 3rem,
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0 / 3rem 100%;
+  mask-image: linear-gradient(#000 40%, transparent);
+}
+
+/* Inner pages share one masthead: eyebrow, title, lead. */
+.page {
+  padding-block: var(--space-16) var(--space-12);
+}
+.page > .container > header {
+  max-width: 48rem;
+  margin-bottom: var(--space-12);
+}
+.page > .container > header h1 {
+  font-size: clamp(2.2rem, 4.6vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+.page .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent-warm);
+  margin-bottom: var(--space-3);
+}
+.page .lead {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--fg-muted);
+  max-width: 60ch;
+}
+.page .prose {
+  font-family: var(--font-sans);
+  font-size: 1.02rem;
+}
+
+/* Text pages: each section's heading sits in a side column and stays in
+   view while its content scrolls. */
+.page--doc section {
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 44rem);
+  column-gap: var(--space-12);
+  margin-top: var(--space-8);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--border);
+}
+.page--doc section > * {
+  grid-column: 2;
+  min-width: 0;
+}
+.page--doc section > h2 {
+  grid-column: 1;
+  grid-row: 1 / span 40;
+  align-self: start;
+  position: sticky;
+  top: 5.5rem;
+  margin: 0;
+  font-size: 1.3rem;
+}
+.page--doc section p,
+.page--doc section li {
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+.page--doc section > :last-child {
+  margin-bottom: 0;
+}
+.page--doc section pre {
+  margin-block: var(--space-4) var(--space-6);
+  padding: var(--space-4) var(--space-6);
+  border: 1px solid var(--code-border);
+  border-radius: var(--radius-lg);
+}
+
+@media (max-width: 56rem) {
+  .page { padding-block: var(--space-8); }
+  .page--doc section { display: block; }
+  .page--doc section > h2 {
+    position: static;
+    margin-bottom: var(--space-4);
+  }
+}
+
+/* Long-form prose: figures, tables, blockquotes, footnotes, code blocks. */
+.rich-prose img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: var(--space-6) auto;
+  border-radius: var(--radius);
+}
+.rich-prose pre.astro-code {
+  background: var(--code-bg) !important;
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius);
+  overflow-x: auto;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  margin-block: var(--space-4) var(--space-6);
+}
+.rich-prose :not(pre) > code {
+  font-family: var(--font-mono);
+}
+.rich-prose blockquote {
+  margin: var(--space-6) 0;
+  padding: var(--space-2) var(--space-6);
+  border-left: 3px solid var(--accent-soft);
+  color: var(--fg-muted);
+  font-style: italic;
+}
+.rich-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--space-6) 0;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+}
+.rich-prose th,
+.rich-prose td {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.7rem;
+  text-align: left;
+  vertical-align: top;
+}
+.rich-prose th { background: var(--bg-subtle); font-weight: 600; }
+.rich-prose h2,
+.rich-prose h3 {
+  scroll-margin-top: var(--space-16);
+}
+.rich-prose .footnotes {
+  margin-top: var(--space-12);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border);
+  font-size: 0.9rem;
+  color: var(--fg-muted);
+}
+
+/* Terminal output: the colors `km` prints with. */
+.t-dim { color: var(--term-dim); }
+.t-pink { color: var(--term-pink); }
+.t-green { color: var(--term-green); }
+.t-amber { color: var(--term-amber); }
+.t-red { color: var(--term-red); }
+.t-blue { color: var(--term-blue); }
+
+/* Sections of the home page share one rhythm and one heading. */
+.section {
+  padding-block: var(--space-16);
+}
+.section--tint {
+  background: var(--bg-subtle);
+  border-block: 1px solid var(--border);
+}
+.section-head {
+  max-width: 46rem;
+  margin-bottom: var(--space-8);
+}
+.section-head h2 {
+  margin-bottom: var(--space-2);
+}
+.section-head p {
+  color: var(--fg-muted);
+  margin: 0;
+  font-size: 1.05rem;
+}
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent-warm);
+  margin-bottom: var(--space-3);
+}

@@ -1,0 +1,103 @@
+---
+import { t, type Lang, type Key } from '../i18n/ui';
+import { output } from '../lib/output';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const tt = t(lang);
+
+const cards: { id: string; html: string; note?: Key }[] = [
+  { id: 'score', html: output.scoreShort },
+  { id: 'static', html: output.loc },
+  { id: 'history', html: output.hotspots },
+  { id: 'impact', html: output.impact, note: 'features.impact.note' },
+  { id: 'gate', html: output.gate },
+  { id: 'agents', html: output.agents },
+];
+---
+
+<section class="section section--tint" id="features">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">{tt('features.eyebrow')}</p>
+      <h2>{tt('features.title')}</h2>
+      <p>{tt('features.intro')}</p>
+    </div>
+    <div class="grid">
+      {cards.map(({ id, html, note }, i) => (
+        <article class="card">
+          <div class="card-text">
+            <span class="num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{tt(`features.${id}.title` as Key)}</h3>
+            <p>{tt(`features.${id}.body` as Key)}</p>
+            {note && <p class="note">{tt(note)}</p>}
+          </div>
+          <pre class="card-code"><code set:html={html} /></pre>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color 120ms ease, transform 120ms ease;
+  }
+  .card:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+  }
+  .card-text {
+    padding: var(--space-6);
+    flex: 1;
+  }
+  .num {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--accent-warm);
+    margin-bottom: var(--space-2);
+  }
+  .card h3 {
+    margin-bottom: var(--space-2);
+    font-size: 1.2rem;
+  }
+  .card p {
+    color: var(--fg-muted);
+    margin: 0;
+    line-height: 1.55;
+    font-size: 0.95rem;
+  }
+  .card .note {
+    margin-top: var(--space-3);
+    font-size: 0.85rem;
+    color: var(--fg-subtle);
+  }
+  .card-code {
+    margin: 0;
+    border-radius: 0;
+    border-top: 1px solid var(--code-border);
+    padding: var(--space-4) var(--space-6);
+    font-size: 0.76rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 50rem) {
+    .grid { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

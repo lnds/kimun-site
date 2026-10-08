@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import { t, type Lang } from '../i18n/ui';
+import { links } from '../lib/links';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const tt = t(lang);
+---
+
+<Base lang={lang} title={`${tt('about.title')} · Kimün`}>
+  <div class="page page--doc backdrop">
+    <div class="container">
+      <header class="masthead">
+        <div>
+          <p class="eyebrow">{tt('about.eyebrow')}</p>
+          <h1>{tt('about.title')}</h1>
+          <p class="lead">{tt('about.lead')}</p>
+        </div>
+        <img src="/madu.png" alt={tt('hero.madu.alt')} width="720" height="959" />
+      </header>
+
+      <section>
+        <h2>{tt('about.name.title')}</h2>
+        <p>{tt('about.name.p1')}</p>
+        <p>{tt('about.name.p2')}</p>
+      </section>
+
+      <section>
+        <h2>{tt('about.madu.title')}</h2>
+        <p>{tt('about.madu.p1')}</p>
+        <p>{tt('about.madu.p2')}</p>
+      </section>
+
+      <section>
+        <h2>{tt('about.kalku.title')}</h2>
+        <p>{tt('about.kalku.p1')}</p>
+        <p><a href={links.github.kalku} rel="noopener">{tt('about.kalku.link')} →</a></p>
+      </section>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .masthead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+    max-width: 60rem !important;
+  }
+  .masthead img {
+    flex: none;
+    width: 12rem;
+    height: auto;
+    filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.3));
+  }
+  @media (max-width: 40rem) {
+    .masthead { flex-direction: column-reverse; align-items: flex-start; }
+    .masthead img { width: 8rem; }
+  }
+</style>

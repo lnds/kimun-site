@@ -1,0 +1,86 @@
+---
+import { t, type Lang } from '../i18n/ui';
+import { links } from '../lib/links';
+
+interface Props {
+  lang: Lang;
+  /** The line to show; the Cargo one unless told otherwise. */
+  command?: string;
+}
+const { lang, command = links.install.cargo } = Astro.props;
+const tt = t(lang);
+---
+
+<div class="install" data-install>
+  <span class="sigil" aria-hidden="true">$</span>
+  <code data-install-text>{command}</code>
+  <button
+    type="button"
+    data-install-copy
+    data-copied={tt('install.copied')}
+    aria-label={tt('install.copy')}
+  >
+    {tt('install.copy')}
+  </button>
+</div>
+
+<style>
+  .install {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    max-width: 100%;
+    padding: 0.35rem 0.35rem 0.35rem 0.9rem;
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-radius: var(--radius-lg);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+  .sigil {
+    color: var(--accent-soft);
+    user-select: none;
+  }
+  .install code {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    background: none;
+    color: var(--code-fg);
+    white-space: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    font-size: inherit;
+  }
+  button {
+    flex: none;
+    padding: 0.4rem 0.8rem;
+    font: 600 0.78rem var(--font-sans);
+    color: var(--code-fg);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius);
+    cursor: pointer;
+  }
+  button:hover {
+    background: rgba(255, 255, 255, 0.16);
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-install]').forEach((box) => {
+    const btn = box.querySelector<HTMLButtonElement>('[data-install-copy]');
+    const text = box.querySelector('[data-install-text]')?.textContent ?? '';
+    if (!btn) return;
+    const idle = btn.textContent;
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(text);
+        btn.textContent = btn.dataset.copied ?? idle;
+        setTimeout(() => (btn.textContent = idle), 1600);
+      } catch (e) {
+        /* clipboard blocked: the command is still selectable by hand */
+      }
+    });
+  });
+</script>

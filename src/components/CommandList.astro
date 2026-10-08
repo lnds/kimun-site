@@ -1,0 +1,82 @@
+---
+import { t, type Lang, type Key } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const tt = t(lang);
+
+const groups: { title: Key; commands: string[] }[] = [
+  {
+    title: 'commands.group.static',
+    commands: ['score', 'loc', 'dups', 'cycom', 'cogcom', 'indent', 'hal', 'mi', 'smells', 'deps', 'report'],
+  },
+  {
+    title: 'commands.group.git',
+    commands: ['hotspots', 'churn', 'knowledge', 'authors', 'tc', 'impact', 'age'],
+  },
+  { title: 'commands.group.tools', commands: ['init', 'ai', 'completions'] },
+];
+---
+
+<section class="section" id="commands">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">{tt('commands.eyebrow')}</p>
+      <h2>{tt('commands.title')}</h2>
+      <p>{tt('commands.intro')}</p>
+    </div>
+    <div class="groups">
+      {groups.map(({ title, commands }) => (
+        <div class="group">
+          <h3>{tt(title)}</h3>
+          <dl>
+            {commands.map((name) => (
+              <div class="row">
+                <dt><code>km {name}</code></dt>
+                <dd>{tt(`cmd.${name}` as Key)}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .groups {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-8);
+    align-items: start;
+  }
+  .group h3 {
+    font-size: 1.05rem;
+    padding-bottom: var(--space-3);
+    margin-bottom: var(--space-3);
+    border-bottom: 2px solid var(--accent-soft);
+  }
+  dl {
+    margin: 0;
+  }
+  .row {
+    padding-block: var(--space-2);
+    border-bottom: 1px solid var(--border);
+  }
+  dt code {
+    color: var(--accent);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  dd {
+    margin: var(--space-1) 0 0;
+    color: var(--fg-muted);
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+  @media (max-width: 60rem) {
+    .groups { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>
