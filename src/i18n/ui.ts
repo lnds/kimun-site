@@ -59,7 +59,7 @@ export const ui = {
     'features.impact.body':
       'Antes de fusionar, pregunta qué alcanza tu cambio: qué archivos llaman a las funciones que tocaste, cuáles tienen tests y dónde probablemente falta uno.',
     'features.impact.note':
-      'El radio a nivel de funciones funciona hoy para Elixir, JavaScript/TypeScript y Kaikai.',
+      'Funciona hoy para Elixir, JavaScript/TypeScript, Kaikai y Rust. En Elixir, además, acota el cambio a las funciones que tocaste.',
     'features.gate.title': 'Una compuerta en CI',
     'features.gate.body':
       'Compara tu rama con la principal. Si un archivo empeora o crece el código duplicado, el cambio no pasa.',
@@ -194,7 +194,7 @@ export const ui = {
     'features.impact.body':
       'Before you merge, ask what your change reaches: which files call the functions you touched, which of them have tests, and where one is probably missing.',
     'features.impact.note':
-      'The function-level radius works today for Elixir, JavaScript/TypeScript and Kaikai.',
+      'It works today for Elixir, JavaScript/TypeScript, Kaikai and Rust. In Elixir it also narrows the change to the functions you touched.',
     'features.gate.title': 'A gate in CI',
     'features.gate.body':
       'It compares your branch with the main one. If a file gets worse or duplicated code grows, the change does not pass.',
