@@ -1,0 +1,31 @@
+# Kimün
+
+> Kimün (`km`) is a command-line tool that measures the health of a codebase: an overall grade from A++ to F--, static metrics (lines of code, duplication, cyclomatic and cognitive complexity, Halstead, maintainability index, code smells, dependencies), what git history tells (hotspots, churn, ownership, temporal coupling, file age) and the impact of a change before it is merged. Written in Rust, MIT licensed. The site kimun.tools is available in Spanish (root paths) and English (paths under /en/).
+
+Every command takes a path and answers for a machine with `--format json`. `km ai skill claude` installs a skill that teaches a coding agent to run `km` and read its output.
+
+Install with `cargo install kimun` or `brew install lnds/kimun/kimun`.
+
+## Documentation
+
+- [Home (en)](https://kimun.tools/en/): what Kimün measures, with real output, the explainer video and the list of commands.
+- [Get started (en)](https://kimun.tools/en/get-started/): installation, the first measurement and what to look at next.
+- [The name (en)](https://kimun.tools/en/about/): what "kimün" means and who Madu, the mascot, is.
+- [README](https://github.com/lnds/kimun/blob/main/README.md): the full reference, with every command, its options and examples.
+
+## Español
+
+- [Inicio (es)](https://kimun.tools/): qué mide Kimün, con salida real, el video y la lista de comandos.
+- [Empezar (es)](https://kimun.tools/get-started/): instalación, la primera medición y qué mirar después.
+- [El nombre (es)](https://kimun.tools/about/): qué significa «kimün» y quién es Madu, la mascota.
+- [LEEME](https://github.com/lnds/kimun/blob/main/LEEME.md): la referencia completa en español.
+
+## Source
+
+- [GitHub · lnds/kimun](https://github.com/lnds/kimun): source code, issues and releases.
+- [crates.io · kimun](https://crates.io/crates/kimun): the published crate.
+
+## Video
+
+- [Kimün explained (en)](https://kimun.tools/video/kimun-explained.mp4): two minutes, narrated by Madu.
+- [Kimün explicado (es)](https://kimun.tools/video/kimun-explicado.mp4): dos minutos, narrado por Madu.

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://kimun.tools/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://kimun.tools/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kimun.tools/en/"/>
+  </url>
+  <url>
+    <loc>https://kimun.tools/en/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://kimun.tools/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kimun.tools/en/"/>
+  </url>
+  <url>
+    <loc>https://kimun.tools/get-started/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://kimun.tools/get-started/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kimun.tools/en/get-started/"/>
+  </url>
+  <url>
+    <loc>https://kimun.tools/en/get-started/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://kimun.tools/get-started/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kimun.tools/en/get-started/"/>
+  </url>
+  <url>
+    <loc>https://kimun.tools/about/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://kimun.tools/about/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kimun.tools/en/about/"/>
+  </url>
+  <url>
+    <loc>https://kimun.tools/en/about/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://kimun.tools/about/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kimun.tools/en/about/"/>
+  </url>
+</urlset>

@@ -17,6 +17,10 @@ const tt = t(lang);
 const pageTitle = title ?? tt('site.title');
 const desc = description ?? tt('site.description');
 const card = `${links.site}/og-1200x630.jpg`;
+// The same page in each language, for search engines.
+const bare = Astro.url.pathname.replace(/^\/en(?=\/|$)/, '') || '/';
+const inEs = `${links.site}${bare}`;
+const inEn = `${links.site}/en${bare}`;
 ---
 
 <!doctype html>
@@ -26,6 +30,11 @@ const card = `${links.site}/og-1200x630.jpg`;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{pageTitle}</title>
     <meta name="description" content={desc} />
+
+    <link rel="canonical" href={lang === 'es' ? inEs : inEn} />
+    <link rel="alternate" hreflang="es" href={inEs} />
+    <link rel="alternate" hreflang="en" href={inEn} />
+    <link rel="alternate" hreflang="x-default" href={inEs} />
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/madu-icon-32.png" />
