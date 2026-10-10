@@ -1,0 +1,136 @@
+---
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import DocsNav from './DocsNav.astro';
+import { t, pathInLang, type Lang } from '../i18n/ui';
+import { docGroups, docPath, docsOf, type Doc } from '../lib/docs';
+
+interface Props {
+  lang: Lang;
+  entry: Doc;
+}
+const { lang, entry } = Astro.props;
+const tt = t(lang);
+const { Content } = await render(entry);
+const { title, description } = entry.data;
+
+const slug = entry.id.slice(lang.length + 1);
+const group = docGroups.find(({ slugs }) => slugs.includes(slug))!;
+const docs = await docsOf(lang);
+const order = docGroups.flatMap(({ slugs }) => slugs);
+const at = order.indexOf(slug);
+const prev = order[at - 1];
+const next = order[at + 1];
+---
+
+<Base lang={lang} title={`${title} · Kimün`} description={description}>
+  <div class="page backdrop">
+    <div class="container docs">
+      <aside>
+        <DocsNav lang={lang} current={slug} />
+      </aside>
+      <article>
+        <header>
+          <p class="eyebrow">
+            <a href={pathInLang('/docs/', lang)}>{tt('docs.title')}</a> · {tt(group.title)}
+          </p>
+          <h1 class:list={{ cmd: title.startsWith('km ') }}>{title}</h1>
+          <p class="lead">{description}</p>
+        </header>
+        <div class="rich-prose">
+          <Content />
+        </div>
+        <nav class="pager" aria-label={tt('docs.pager')}>
+          {prev ? (
+            <a class="prev" href={docPath(prev, lang)}>
+              <span>← {tt('docs.prev')}</span>
+              {docs.get(prev)!.data.title}
+            </a>
+          ) : <span />}
+          {next && (
+            <a class="next" href={docPath(next, lang)}>
+              <span>{tt('docs.next')} →</span>
+              {docs.get(next)!.data.title}
+            </a>
+          )}
+        </nav>
+      </article>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .docs {
+    display: grid;
+    grid-template-columns: 13rem minmax(0, 48rem);
+    column-gap: var(--space-12);
+    align-items: start;
+  }
+  aside {
+    position: sticky;
+    top: 5.5rem;
+    max-height: calc(100vh - 7rem);
+    overflow-y: auto;
+    padding-bottom: var(--space-4);
+  }
+  article {
+    min-width: 0;
+  }
+  header {
+    margin-bottom: var(--space-8);
+  }
+  .eyebrow a {
+    color: inherit;
+  }
+  h1 {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+    margin-bottom: var(--space-3);
+  }
+  h1.cmd {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--accent);
+  }
+  .pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    margin-top: var(--space-16);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border);
+  }
+  .pager a {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    font-weight: 600;
+  }
+  .pager a span {
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: var(--fg-subtle);
+  }
+  .pager .next {
+    grid-column: 2;
+    text-align: right;
+  }
+
+  /* On a narrow screen the menu goes below the page: the text comes first. */
+  @media (max-width: 56rem) {
+    .docs {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    aside {
+      order: 2;
+      position: static;
+      max-height: none;
+      margin-top: var(--space-12);
+      padding-top: var(--space-8);
+      border-top: 1px solid var(--border);
+    }
+  }
+</style>

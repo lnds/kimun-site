@@ -1,0 +1,92 @@
+---
+import { t, pathInLang, type Lang } from '../i18n/ui';
+import { docGroups, docPath, docsOf } from '../lib/docs';
+
+interface Props {
+  lang: Lang;
+  /** The page being read, to mark it in the menu. */
+  current?: string;
+}
+const { lang, current } = Astro.props;
+const tt = t(lang);
+const docs = await docsOf(lang);
+---
+
+<nav class="docs-nav" aria-label={tt('docs.title')}>
+  <a class="top" href={pathInLang('/docs/', lang)} aria-current={current ? undefined : 'page'}>
+    {tt('docs.title')}
+  </a>
+  {docGroups.map(({ title, slugs }) => (
+    <div class="group">
+      <h2>{tt(title)}</h2>
+      <ul>
+        {slugs.map((slug) => {
+          const name = docs.get(slug)!.data.title;
+          return (
+            <li>
+              <a
+                href={docPath(slug, lang)}
+                class:list={{ cmd: name.startsWith('km ') }}
+                aria-current={slug === current ? 'page' : undefined}
+              >
+                {name}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  ))}
+</nav>
+
+<style>
+  .docs-nav {
+    font-size: 0.92rem;
+  }
+  .top {
+    display: block;
+    font-weight: 700;
+    color: var(--fg);
+    margin-bottom: var(--space-4);
+  }
+  .group + .group {
+    margin-top: var(--space-6);
+  }
+  h2 {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent-warm);
+    margin: 0 0 var(--space-2);
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 1px solid var(--border);
+  }
+  li a {
+    display: block;
+    padding: 0.2rem var(--space-3);
+    margin-left: -1px;
+    border-left: 2px solid transparent;
+    color: var(--fg-muted);
+  }
+  li a.cmd {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+  }
+  a:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  a[aria-current='page'] {
+    color: var(--accent);
+  }
+  li a[aria-current='page'] {
+    border-left-color: var(--accent);
+    font-weight: 600;
+  }
+</style>

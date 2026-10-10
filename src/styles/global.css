@@ -371,8 +371,25 @@ pre code {
   color: var(--fg-muted);
   font-style: italic;
 }
+.rich-prose h2 {
+  font-size: 1.45rem;
+  margin-top: var(--space-12);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border);
+}
+.rich-prose h3 {
+  font-size: 1.1rem;
+  margin-top: var(--space-8);
+}
+.rich-prose li {
+  margin-bottom: var(--space-2);
+}
+/* A table wider than the column scrolls on its own, not the page. */
 .rich-prose table {
-  width: 100%;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
   border-collapse: collapse;
   margin: var(--space-6) 0;
   font-family: var(--font-sans);

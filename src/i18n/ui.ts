@@ -17,6 +17,7 @@ export const ui = {
     'nav.video': 'Video',
     'nav.commands': 'Comandos',
     'nav.start': 'Empezar',
+    'nav.docs': 'Docs',
     'nav.name': 'El nombre',
 
     'theme.toggle': 'Cambiar entre claro y oscuro',
@@ -121,7 +122,17 @@ export const ui = {
     'start.config.body':
       'No hace falta, pero con km init obtienes un .kimun.toml calibrado para tu proyecto, donde puedes ajustar umbrales y exclusiones.',
     'start.docs.title': 'Documentación completa',
-    'start.docs.body': 'Cada comando, con sus opciones y ejemplos, está en el README del repositorio.',
+    'start.docs.body': 'Cada comando tiene su página, con sus opciones y ejemplos.',
+
+    'docs.eyebrow': 'Referencia',
+    'docs.title': 'Documentación',
+    'docs.lead':
+      'Cada comando de km con sus opciones, sus fórmulas y ejemplos de salida, más la configuración y los lenguajes soportados.',
+    'docs.group.guide': 'Para empezar',
+    'docs.group.reference': 'Referencia',
+    'docs.pager': 'Página anterior y siguiente',
+    'docs.prev': 'Anterior',
+    'docs.next': 'Siguiente',
 
     'about.eyebrow': 'El nombre',
     'about.title': 'Kimün y Madu',
@@ -153,6 +164,7 @@ export const ui = {
     'nav.video': 'Video',
     'nav.commands': 'Commands',
     'nav.start': 'Get started',
+    'nav.docs': 'Docs',
     'nav.name': 'The name',
 
     'theme.toggle': 'Switch between light and dark',
@@ -256,7 +268,17 @@ export const ui = {
     'start.config.body':
       'None is needed, but km init gives you a .kimun.toml calibrated for your project, where you can tune thresholds and exclusions.',
     'start.docs.title': 'Full documentation',
-    'start.docs.body': 'Every command, with its options and examples, is in the README of the repository.',
+    'start.docs.body': 'Every command has its own page, with its options and examples.',
+
+    'docs.eyebrow': 'Reference',
+    'docs.title': 'Documentation',
+    'docs.lead':
+      'Every km command with its options, its formulas and sample output, plus the configuration and the supported languages.',
+    'docs.group.guide': 'Getting started',
+    'docs.group.reference': 'Reference',
+    'docs.pager': 'Previous and next page',
+    'docs.prev': 'Previous',
+    'docs.next': 'Next',
 
     'about.eyebrow': 'The name',
     'about.title': 'Kimün and Madu',

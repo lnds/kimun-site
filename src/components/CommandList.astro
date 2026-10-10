@@ -1,5 +1,6 @@
 ---
 import { t, type Lang, type Key } from '../i18n/ui';
+import { commandDocPath } from '../lib/docs';
 
 interface Props {
   lang: Lang;
@@ -34,7 +35,7 @@ const groups: { title: Key; commands: string[] }[] = [
           <dl>
             {commands.map((name) => (
               <div class="row">
-                <dt><code>km {name}</code></dt>
+                <dt><a href={commandDocPath(name, lang)}><code>km {name}</code></a></dt>
                 <dd>{tt(`cmd.${name}` as Key)}</dd>
               </div>
             ))}

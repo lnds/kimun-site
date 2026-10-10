@@ -1,7 +1,6 @@
 ---
 import { t, pathInLang, type Lang } from '../i18n/ui';
 import InstallCommand from './InstallCommand.astro';
-import { links } from '../lib/links';
 
 interface Props {
   lang: Lang;
@@ -19,7 +18,7 @@ const tt = t(lang);
       <a class="btn" href={pathInLang('/get-started', lang)}>
         {tt('hero.cta.start')}
       </a>
-      <a class="btn secondary" href={links.github.kimun} rel="noopener">
+      <a class="btn secondary" href={pathInLang('/docs/', lang)}>
         {tt('cta.docs')}
       </a>
     </div>
