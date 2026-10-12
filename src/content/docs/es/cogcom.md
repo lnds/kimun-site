@@ -19,3 +19,5 @@ Opciones:
 | `--min-complexity N` | Omite los archivos cuya función más compleja está por debajo de N; con `--per-function`, oculta también las funciones por debajo de N (por defecto: 1) |
 | `--per-function` | Muestra el desglose por función |
 | `--sort-by METRIC` | Ordena por `total`, `max` o `avg` (por defecto: `total`) |
+
+En los lenguajes de llaves una función termina donde sus llaves se balancean. Un cuerpo introducido por `=` (`fn f(x) = expr`, como en Kaikai, Kotlin o Scala) no tiene una llave de cierre propia: sigue mientras sus llaves estén abiertas y las líneas siguientes tengan más indentación que la declaración. `km cycom` encuentra las funciones de la misma manera.

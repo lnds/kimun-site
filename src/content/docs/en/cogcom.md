@@ -19,3 +19,5 @@ Options:
 | `--min-complexity N` | Skip files whose most complex function is below N; with `--per-function`, also hide functions below N (default: 1) |
 | `--per-function` | Show per-function breakdown |
 | `--sort-by METRIC` | Sort by `total`, `max`, or `avg` (default: `total`) |
+
+In brace languages a function ends where its braces balance. A body introduced by `=` (`fn f(x) = expr`, as in Kaikai, Kotlin or Scala) has no closing brace of its own: it runs while its braces are open and the following lines are indented deeper than the declaration. `km cycom` finds functions the same way.
