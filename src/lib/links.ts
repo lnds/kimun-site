@@ -5,8 +5,8 @@ export const links = {
   github: {
     kimun: 'https://github.com/lnds/kimun',
     releases: 'https://github.com/lnds/kimun/releases',
-    kalku: 'https://github.com/lnds/kalku',
   },
+  kalku: 'https://kalku.tools',
   crate: 'https://crates.io/crates/kimun',
   blog: 'https://lnds.net',
   install: {
