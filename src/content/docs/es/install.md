@@ -8,7 +8,7 @@ cargo install kimun              # desde crates.io
 brew install lnds/kimun/kimun    # con Homebrew, en macOS y Linux
 ```
 
-Cualquiera de los dos instala el binario `km`. También hay binarios listos para macOS, Linux y Windows en la [página de releases](https://github.com/lnds/kimun/releases). Desde una copia del [repositorio](https://github.com/lnds/kimun), `cargo install --path .` lo compila desde el código fuente.
+Cualquiera de los dos instala el binario `km`. También hay binarios listos para macOS (Apple Silicon), Linux (x86_64 y arm64) y Windows (x86_64) en la [página de releases](https://github.com/lnds/kimun/releases). Desde una copia del [repositorio](https://github.com/lnds/kimun), `cargo install --path .` lo compila desde el código fuente.
 
 ## Autocompletado para el shell
 

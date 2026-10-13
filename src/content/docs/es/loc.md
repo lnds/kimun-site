@@ -19,12 +19,15 @@ Ejecútalo en una ruta específica:
 km loc src/
 ```
 
+Los archivos de tests quedan fuera por defecto, así que los totales son menores que los de `cloc` sobre el mismo directorio. Con `--include-tests` ambos cuentan los mismos archivos.
+
 Opciones:
 
 | Flag | Descripción |
 |------|-------------|
 | `-v`, `--verbose` | Muestra estadísticas de resumen (archivos leídos, únicos, ignorados, tiempo transcurrido) |
 | `--by-author` | Desglosa las líneas de código por autor de git (requiere un repositorio git) |
+| `--include-tests` | Cuenta también los archivos y directorios de tests (por defecto quedan fuera) |
 | `--format {table,json,short,terse}` | Formato de salida (por defecto: table) |
 
 Ejemplo de salida:

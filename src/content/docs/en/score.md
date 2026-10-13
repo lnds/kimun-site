@@ -5,13 +5,13 @@ description: "Code health score"
 
 Computes an overall code health score for the project, grading it from A++ (exceptional) to F-- (severe issues). Uses only static metrics (no git required).
 
-> **Breaking change in v0.14:** The default scoring model changed from MI + Cyclomatic Complexity (6 dimensions) to Cognitive Complexity (5 dimensions). Use `--model legacy` to restore v0.13 behavior.
+There are two scoring models: `cogcom`, the default, built on Cognitive Complexity (5 dimensions), and `legacy`, built on the Maintainability Index and Cyclomatic Complexity (6 dimensions).
 
-Non-code files (Markdown, TOML, JSON, etc.) are automatically excluded. Inline test blocks (`#[cfg(test)]`) are excluded from duplication analysis.
+Non-code files (Markdown, TOML, JSON, etc.) are automatically excluded. Inline test blocks (`#[cfg(test)]`) are excluded from every dimension, see [Inline tests](/en/docs/dups#inline-tests).
 
 ```bash
 km score [path]
-km score --model legacy [path]    # v0.13 scoring model
+km score --model legacy [path]    # MI + cyclomatic model
 ```
 
 ## Dimensions and weights (default: cogcom)
@@ -55,7 +55,7 @@ Options:
 
 | Flag | Description |
 |------|-------------|
-| `--model MODEL` | Scoring model: `cogcom` (default, v0.14+) or `legacy` (MI + cyclomatic, v0.13) |
+| `--model MODEL` | Scoring model: `cogcom` (default) or `legacy` (MI + cyclomatic) |
 | `--trend [REF]` | Compare current score against a git ref (default: `HEAD`). Shows change: `B- → B (+2.3)`. Useful for PR review: `--trend origin/main` |
 | `--fail-if-worse` | With `--trend`: exit with code 1 if the score dropped by more than `--gate-tolerance` |
 | `--gate-tolerance POINTS` | Score drop `--fail-if-worse` allows before failing (default: `0.01` with `--gate-scope project`, `0.5` with `--gate-scope changed`). Compares unrounded scores |
@@ -71,26 +71,33 @@ Example output:
 ```
 Code Health Score
 ──────────────────────────────────────────────────────────────────
- Project Score:  B+ (84.3)
- Files Analyzed: 42
- Total LOC:      8,432
+ Project Score:  A (91.7)
+ Files Analyzed: 141
+ Total LOC:      19,075
 ──────────────────────────────────────────────────────────────────
  Dimension                 Weight   Score   Grade
 ──────────────────────────────────────────────────────────────────
- Cognitive Complexity         30%    85.6   B+
- Duplication                  20%    91.3   A
- Indentation Complexity       15%    79.8   B-
- Halstead Effort              20%    85.1   B+
- File Size                    15%    89.2   A-
+ Cognitive Complexity         30%    84.2   B+
+ Duplication                  20%   100.0   A++
+ Indentation Complexity       15%    93.1   A+
+ Halstead Effort              20%    87.5   A-
+ File Size                    15%   100.0   A++
 ──────────────────────────────────────────────────────────────────
 
- Files Needing Attention (worst scores)
+ Files Needing Attention (worst per-file scores, excl. duplication)
 ──────────────────────────────────────────────────────────────────
  Score  Grade  File                       Issues
 ──────────────────────────────────────────────────────────────────
-  54.2  F      src/legacy/parser.rs       Cognitive: 42, Indent: 3.2
-  63.7  D+     src/utils/helpers.rs       Effort: 15200, Indent: 2.4
-  68.9  C-     src/core/engine.rs         Size: 1243 LOC
+  60.7  D      ./src/deps/analyzer.rs     Cognitive: 36
+  63.8  D+     ./src/cogcom/analyzer.rs   Cognitive: 35
+  72.4  C      ./src/smells/rules.rs      Cognitive: 20
+  73.7  C+     ./src/hal/tokenizer.rs     Cognitive: 22
+  73.8  C+     ./src/loc/mod.rs           Cognitive: 19
+  74.8  C+     ./src/knowledge/mod.rs     Cognitive: 21
+  75.6  C+     ./src/dups/mod.rs          Cognitive: 19
+  77.4  B-     ./src/test_blocks.rs       Cognitive: 17
+  78.2  B-     ./src/cli_help.rs          Cognitive: 16
+  78.9  B-     ./src/walk.rs              Cognitive: 16
 ──────────────────────────────────────────────────────────────────
 ```
 

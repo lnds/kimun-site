@@ -65,6 +65,11 @@ description: "Los lenguajes que Kimün reconoce y cómo cuenta cada archivo."
   triple comilla de Kaikai y Python) cuentan como código para `km loc`, pero se
   excluyen de los análisis ciclomático, cognitivo, de Halstead y de smells: la
   prosa y los datos incrustados no son flujo de control.
+- **Los strings crudos de Rust** (`r"..."`, `r#"..."#` y las formas con más `#`,
+  también con prefijo `b` o `c`) terminan solo en una comilla seguida de tantos `#`
+  como los que los abrieron, y abarcan varias líneas. Lo que contienen cuenta como
+  código para `km loc`, se parezca a lo que se parezca, y queda fuera de los
+  análisis ciclomático, cognitivo, de Halstead y de smells.
 
 
 ## Características

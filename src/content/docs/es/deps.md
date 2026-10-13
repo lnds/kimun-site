@@ -9,7 +9,7 @@ Analiza las dependencias internas entre módulos leyendo las sentencias import/u
 km deps [path]
 ```
 
-Soporta Elixir (cada módulo al que el código se refiere, con el `alias` deshecho; mira las notas más abajo), Rust (cada ruta que nombra un módulo del workspace: `use`, `crate::`, `super::`, un módulo hijo; mira las notas más abajo), Python (`import` y `from … import`, absolutos y relativos; mira las notas más abajo), JavaScript/TypeScript (`import`/`require` relativos), Go (imports que coinciden con la ruta del módulo en `go.mod`) y Kaikai (`import a.b.c`, incluidas las formas `as` y `.{…}`). Las dependencias externas (crates, paquetes de npm, la biblioteca estándar de Kaikai) se ignoran.
+Soporta Elixir (cada módulo al que el código se refiere, con el `alias` deshecho; mira las notas más abajo), Rust (cada ruta que nombra un módulo del workspace: `use`, `crate::`, `super::`, un módulo hijo; mira las notas más abajo), Python (`import` y `from … import`, absolutos y relativos; mira las notas más abajo), JavaScript/TypeScript (`import`/`require` relativos), Go (imports de los paquetes del repositorio, según la ruta de módulo de cada `go.mod`; mira las notas más abajo) y Kaikai (`import a.b.c`, incluidas las formas `as` y `.{…}`). Las dependencias externas (crates, paquetes de npm, la biblioteca estándar de Kaikai) se ignoran.
 
 Los archivos en cualquier otro lenguaje quedan fuera del grafo, en vez de listarse con cero dependencias. El pie de la tabla, el arreglo `unsupported` de la salida JSON y el campo `unsupported:N` del formato short dicen cuántos archivos se omitieron, así que "no medido" nunca se muestra como "sin dependencias".
 
@@ -42,6 +42,14 @@ Notas sobre Python:
 - Un import absoluto se busca desde cada directorio sobre el archivo que importa que no sea él mismo un paquete (no tiene `__init__.py`), del más cercano al más lejano, y desde el directorio `src` bajo cada uno. Eso cubre un proyecto que se ejecuta desde su raíz, un layout `src` con `tests/` al lado, y varios proyectos en un repositorio. Después vienen las raíces que declara el `pyproject.toml` más cercano por encima: donde el backend de build encuentra los paquetes (`where` y `package-dir` de setuptools, `packages` de Poetry, `sources` y `packages` de Hatch, `python-source` de maturin, `package-dir` de PDM, `module-root` de uv) y lo que agrega pytest (`pythonpath`). Lo que no se encuentra bajo ninguno es externo: la biblioteca estándar, los paquetes instalados.
 - Para `km impact`, `test_*.py`, `*_test.py` y `tests.py` son tests, y `conftest.py` es soporte de tests, que no protege nada; `__main__.py`, `setup.py` y `manage.py` son puntos de entrada, igual que lo que está bajo `management/commands`.
 - No se ven: los módulos nombrados en tiempo de ejecución (`importlib`, `__import__`, los settings de Django e `INSTALLED_APPS`), las raíces agregadas en tiempo de ejecución (`sys.path`, `PYTHONPATH`, un archivo `.pth`) o declaradas en `setup.py`, `setup.cfg` o `pytest.ini`, y un paquete namespace repartido en varias raíces. Un nombre que un paquete reexporta lleva a su `__init__.py`, y de ahí al módulo que lo define.
+
+Notas sobre Go:
+
+- Un import nombra un paquete, y un paquete es un directorio: el import depende de cada archivo `.go` que esté directamente dentro, no de los que están en sus subdirectorios, que son otros paquetes. No se lee en qué archivo está lo que se usó.
+- Los archivos de test (`_test.go`) no son parte de lo que un paquete ofrece, ni tampoco los que la herramienta ignora (`_x.go`, `.x.go`). Un test en un paquete de test externo (`package store_test`) que importa su propio paquete depende de los archivos que tiene al lado.
+- Se lee cada `go.mod` bajo el directorio analizado, así que los módulos de un repositorio con varios se resuelven cada uno desde su propio directorio, con o sin `go.work`. Un import de la ruta del módulo misma es el paquete en la raíz del módulo.
+- Los archivos de un mismo paquete se usan entre sí sin importarse, así que no hay aristas entre ellos. El grafo de imports es, por lo tanto, una cota inferior de las dependencias reales.
+- No se ven: las restricciones de compilación (`//go:build`, nombres de archivo como `x_linux.go`), así que un archivo que queda fuera de una compilación cuenta igual, ni los paquetes bajo `vendor/`.
 
 Notas sobre Kaikai:
 

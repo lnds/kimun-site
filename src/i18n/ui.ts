@@ -60,17 +60,17 @@ export const ui = {
     'features.impact.body':
       'Antes de fusionar, pregunta qué alcanza tu cambio: qué archivos llaman a las funciones que tocaste, cuáles tienen tests y dónde probablemente falta uno.',
     'features.impact.note':
-      'Funciona hoy para Elixir, JavaScript/TypeScript, Kaikai, Python y Rust. En Elixir y Python, además, acota el cambio a las funciones que tocaste.',
+      'Funciona hoy para Elixir, Go, JavaScript/TypeScript, Kaikai, Python y Rust. En Elixir y Python, además, acota el cambio a las funciones que tocaste.',
     'features.gate.title': 'Una compuerta en CI',
     'features.gate.body':
       'Compara tu rama con la principal. Si un archivo empeora o crece el código duplicado, el cambio no pasa.',
     'features.agents.title': 'Hecho para agentes de código',
     'features.agents.body':
-      'Todos los comandos pueden responder en JSON, y con un comando instalas una skill para que tu agente mida antes de cambiar.',
+      'Todos los comandos que miden pueden responder en JSON, y con un comando instalas una skill para que tu agente mida antes de cambiar.',
 
     'commands.eyebrow': 'Comandos',
     'commands.title': 'Todo lo que trae km',
-    'commands.intro': 'Cada comando acepta una ruta y, con --format json, responde para una máquina.',
+    'commands.intro': 'Los comandos que miden aceptan una ruta y, con --format json, responden para una máquina.',
     'commands.group.static': 'Métricas estáticas',
     'commands.group.git': 'Historia en git',
     'commands.group.tools': 'Herramientas',
@@ -108,7 +108,7 @@ export const ui = {
     'start.install.cargo': 'Con Cargo, desde crates.io:',
     'start.install.brew': 'Con Homebrew, en macOS y Linux:',
     'start.install.bin':
-      'También hay binarios listos para macOS, Linux y Windows en la página de versiones.',
+      'También hay binarios listos para macOS (Apple Silicon), Linux (x86_64 y arm64) y Windows (x86_64) en la página de versiones.',
     'start.install.releases': 'Ver las versiones',
     'start.first.title': 'La primera medición',
     'start.first.body':
@@ -206,17 +206,17 @@ export const ui = {
     'features.impact.body':
       'Before you merge, ask what your change reaches: which files call the functions you touched, which of them have tests, and where one is probably missing.',
     'features.impact.note':
-      'It works today for Elixir, JavaScript/TypeScript, Kaikai, Python and Rust. In Elixir and Python it also narrows the change to the functions you touched.',
+      'It works today for Elixir, Go, JavaScript/TypeScript, Kaikai, Python and Rust. In Elixir and Python it also narrows the change to the functions you touched.',
     'features.gate.title': 'A gate in CI',
     'features.gate.body':
       'It compares your branch with the main one. If a file gets worse or duplicated code grows, the change does not pass.',
     'features.agents.title': 'Built for coding agents',
     'features.agents.body':
-      'Every command can answer in JSON, and one command installs a skill so your agent measures before it changes anything.',
+      'Every command that measures can answer in JSON, and one command installs a skill so your agent measures before it changes anything.',
 
     'commands.eyebrow': 'Commands',
     'commands.title': 'Everything km brings',
-    'commands.intro': 'Every command takes a path and, with --format json, answers for a machine.',
+    'commands.intro': 'The commands that measure take a path and, with --format json, answer for a machine.',
     'commands.group.static': 'Static metrics',
     'commands.group.git': 'History in git',
     'commands.group.tools': 'Tools',
@@ -254,7 +254,7 @@ export const ui = {
     'start.install.cargo': 'With Cargo, from crates.io:',
     'start.install.brew': 'With Homebrew, on macOS and Linux:',
     'start.install.bin':
-      'There are also ready-made binaries for macOS, Linux and Windows on the releases page.',
+      'There are also ready-made binaries for macOS (Apple Silicon), Linux (x86_64 and arm64) and Windows (x86_64) on the releases page.',
     'start.install.releases': 'See the releases',
     'start.first.title': 'The first measurement',
     'start.first.body':

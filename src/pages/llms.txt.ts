@@ -22,7 +22,7 @@ export const GET: APIRoute = async () => {
 
 > Kimün (\`km\`) is a command-line tool that measures the health of a codebase: an overall grade from A++ to F--, static metrics (lines of code, duplication, cyclomatic and cognitive complexity, Halstead, maintainability index, code smells, dependencies), what git history tells (hotspots, churn, ownership, temporal coupling, file age) and the impact of a change before it is merged. Written in Rust, MIT licensed. The site kimun.tools is available in Spanish (root paths) and English (paths under /en/).
 
-Every command takes a path and answers for a machine with \`--format json\`. \`km ai skill claude\` installs a skill that teaches a coding agent to run \`km\` and read its output.
+The commands that measure take a path and answer for a machine with \`--format json\`. \`km ai skill claude\` installs a skill that teaches a coding agent to run \`km\` and read its output.
 
 Install with \`${links.install.cargo}\` or \`${links.install.brew}\`.
 

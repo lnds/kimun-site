@@ -8,30 +8,30 @@ const prompt = (cmd: string) => `${c('dim', '$')} ${cmd}\n`;
 
 export const output = {
   score: `${prompt('km score')}
- Project Score:  ${c('green', 'A (91.0)')}
- Files Analyzed: 127
- Total LOC:      18,594
+ Project Score:  ${c('green', 'A (91.7)')}
+ Files Analyzed: 141
+ Total LOC:      19,075
 
  Dimension                 Weight   Score   Grade
- Cognitive Complexity         30%    83.6   ${c('green', 'B+')}
- Duplication                  20%    97.3   ${c('green', 'A++')}
- Indentation Complexity       15%    93.5   ${c('green', 'A+')}
- Halstead Effort              20%    87.4   ${c('green', 'A-')}
- File Size                    15%    99.6   ${c('green', 'A++')}
+ Cognitive Complexity         30%    84.2   ${c('green', 'B+')}
+ Duplication                  20%   100.0   ${c('green', 'A++')}
+ Indentation Complexity       15%    93.1   ${c('green', 'A+')}
+ Halstead Effort              20%    87.5   ${c('green', 'A-')}
+ File Size                    15%   100.0   ${c('green', 'A++')}
 
  ${c('amber', 'Files Needing Attention')}
-  57.9  ${c('red', 'D-')}   src/deps/analyzer.rs      Cognitive: 36
-  63.9  ${c('red', 'D+')}   src/cogcom/analyzer.rs    Cognitive: 35
-  72.3  ${c('amber', 'C')}    src/smells/rules.rs       Cognitive: 20`,
+  60.7  ${c('red', 'D')}    src/deps/analyzer.rs      Cognitive: 36
+  63.8  ${c('red', 'D+')}   src/cogcom/analyzer.rs    Cognitive: 35
+  72.4  ${c('amber', 'C')}    src/smells/rules.rs       Cognitive: 20`,
 
-  scoreShort: `${prompt('km score')} Project Score:  ${c('green', 'A (91.0)')}
- Files Analyzed: 127
- Total LOC:      18,594`,
+  scoreShort: `${prompt('km score')} Project Score:  ${c('green', 'A (91.7)')}
+ Files Analyzed: 141
+ Total LOC:      19,075`,
 
   loc: `${prompt('km loc')} Language     Files   Blank  Comment    Code
- Rust           126    2490     3502   18579
- Markdown         3     562        0    1394
- YAML             3      36        1     179`,
+ Rust           140    2637     3885   20170
+ Markdown         4     953        0    2627
+ YAML             3      35        1     174`,
 
   hotspots: `${prompt('km hotspots --top 3')} File            Commits  Total Indent  Score
  src/main.rs          67          1259  ${c('amber', '84353')}
@@ -55,9 +55,9 @@ ${c('amber', 'No test reaches 1 of the files that call what changed;\nan integra
   the 0.5 tolerance`,
 
   agents: `${prompt('km ai skill claude')}${prompt('km score --format json')}{
-  ${c('blue', '"score"')}: ${c('amber', '90.98')},
+  ${c('blue', '"score"')}: ${c('amber', '91.72')},
   ${c('blue', '"grade"')}: ${c('green', '"A"')},
-  ${c('blue', '"files_analyzed"')}: ${c('amber', '127')},
+  ${c('blue', '"files_analyzed"')}: ${c('amber', '141')},
   ${c('blue', '"dimensions"')}: [ … ]
 }`,
 } as const;

@@ -19,12 +19,15 @@ Run on a specific path:
 km loc src/
 ```
 
+Test files are left out by default, so the totals are lower than those of `cloc` on the same directory. With `--include-tests` both count the same files.
+
 Options:
 
 | Flag | Description |
 |------|-------------|
 | `-v`, `--verbose` | Show summary stats (files read, unique, ignored, elapsed time) |
 | `--by-author` | Break down lines of code by git author (requires a git repository) |
+| `--include-tests` | Count test files and directories too (left out by default) |
 | `--format {table,json,short,terse}` | Output format (default: table) |
 
 Example output:

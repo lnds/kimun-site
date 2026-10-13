@@ -83,3 +83,9 @@ Por defecto, `km dups` omite los archivos que siguen las convenciones habituales
 - **Por extensión**: `*_test.rs`, `*_test.go`, `test_*.py`, `*.test.js`, `*.spec.ts`, `*Test.java`, `*_test.cpp` y más
 
 Usa `--include-tests` para analizar también los archivos de test.
+
+## Tests en línea
+
+Rust guarda los tests dentro del archivo fuente, bajo `#[cfg(test)]`. Todo comando que mide código deja esos ítems fuera junto con los archivos de test: `dups`, `indent`, `hal`, `cycom`, `cogcom`, `mi`, `miv`, `smells`, `hotspots`, `score` y las métricas de `report`. Solo se omite el ítem bajo el atributo, así que el código que sigue a un módulo de tests sí se mide. `--include-tests` los trae de vuelta.
+
+`km loc` y los conteos de líneas de `km report` los siguen contando: son líneas del archivo, tal como las cuenta `cloc`.

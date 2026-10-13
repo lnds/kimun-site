@@ -5,13 +5,13 @@ description: "Puntaje de salud del código"
 
 Calcula un puntaje general de salud del código para el proyecto, con una nota que va de A++ (excepcional) a F-- (problemas graves). Usa solo métricas estáticas (no requiere git).
 
-> **Cambio incompatible en v0.14:** el modelo de puntaje por defecto pasó de MI + complejidad ciclomática (6 dimensiones) a complejidad cognitiva (5 dimensiones). Usa `--model legacy` para recuperar el comportamiento de v0.13.
+Hay dos modelos de puntaje: `cogcom`, el modelo por defecto, basado en la complejidad cognitiva (5 dimensiones), y `legacy`, basado en el índice de mantenibilidad y la complejidad ciclomática (6 dimensiones).
 
-Los archivos que no son código (Markdown, TOML, JSON, etc.) se excluyen automáticamente. Los bloques de test en línea (`#[cfg(test)]`) se excluyen del análisis de duplicación.
+Los archivos que no son código (Markdown, TOML, JSON, etc.) se excluyen automáticamente. Los bloques de test en línea (`#[cfg(test)]`) se excluyen de todas las dimensiones, ver [Tests en línea](/docs/dups#tests-en-línea).
 
 ```bash
 km score [path]
-km score --model legacy [path]    # modelo de puntaje de v0.13
+km score --model legacy [path]    # modelo de MI + ciclomática
 ```
 
 ## Dimensiones y pesos (por defecto: cogcom)
@@ -55,7 +55,7 @@ Opciones:
 
 | Flag | Descripción |
 |------|-------------|
-| `--model MODEL` | Modelo de puntaje: `cogcom` (por defecto, v0.14+) o `legacy` (MI + ciclomática, v0.13) |
+| `--model MODEL` | Modelo de puntaje: `cogcom` (por defecto) o `legacy` (MI + ciclomática) |
 | `--trend [REF]` | Compara el puntaje actual con una ref de git (por defecto: `HEAD`). Muestra el cambio: `B- → B (+2.3)`. Útil para revisar un PR: `--trend origin/main` |
 | `--fail-if-worse` | Con `--trend`: termina con código 1 si el puntaje bajó más que `--gate-tolerance` |
 | `--gate-tolerance POINTS` | Caída de puntaje que `--fail-if-worse` permite antes de fallar (por defecto: `0.01` con `--gate-scope project`, `0.5` con `--gate-scope changed`). Compara los puntajes sin redondear |
@@ -71,26 +71,33 @@ Ejemplo de salida:
 ```
 Code Health Score
 ──────────────────────────────────────────────────────────────────
- Project Score:  B+ (84.3)
- Files Analyzed: 42
- Total LOC:      8,432
+ Project Score:  A (91.7)
+ Files Analyzed: 141
+ Total LOC:      19,075
 ──────────────────────────────────────────────────────────────────
  Dimension                 Weight   Score   Grade
 ──────────────────────────────────────────────────────────────────
- Cognitive Complexity         30%    85.6   B+
- Duplication                  20%    91.3   A
- Indentation Complexity       15%    79.8   B-
- Halstead Effort              20%    85.1   B+
- File Size                    15%    89.2   A-
+ Cognitive Complexity         30%    84.2   B+
+ Duplication                  20%   100.0   A++
+ Indentation Complexity       15%    93.1   A+
+ Halstead Effort              20%    87.5   A-
+ File Size                    15%   100.0   A++
 ──────────────────────────────────────────────────────────────────
 
- Files Needing Attention (worst scores)
+ Files Needing Attention (worst per-file scores, excl. duplication)
 ──────────────────────────────────────────────────────────────────
  Score  Grade  File                       Issues
 ──────────────────────────────────────────────────────────────────
-  54.2  F      src/legacy/parser.rs       Cognitive: 42, Indent: 3.2
-  63.7  D+     src/utils/helpers.rs       Effort: 15200, Indent: 2.4
-  68.9  C-     src/core/engine.rs         Size: 1243 LOC
+  60.7  D      ./src/deps/analyzer.rs     Cognitive: 36
+  63.8  D+     ./src/cogcom/analyzer.rs   Cognitive: 35
+  72.4  C      ./src/smells/rules.rs      Cognitive: 20
+  73.7  C+     ./src/hal/tokenizer.rs     Cognitive: 22
+  73.8  C+     ./src/loc/mod.rs           Cognitive: 19
+  74.8  C+     ./src/knowledge/mod.rs     Cognitive: 21
+  75.6  C+     ./src/dups/mod.rs          Cognitive: 19
+  77.4  B-     ./src/test_blocks.rs       Cognitive: 17
+  78.2  B-     ./src/cli_help.rs          Cognitive: 16
+  78.9  B-     ./src/walk.rs              Cognitive: 16
 ──────────────────────────────────────────────────────────────────
 ```
 

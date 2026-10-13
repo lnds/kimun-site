@@ -9,7 +9,7 @@ Analyzes internal module dependencies by parsing import/use/require statements. 
 km deps [path]
 ```
 
-Supports Elixir (every module referred to in the code, with `alias` undone; see the notes below), Rust (every path that names a module of the workspace: `use`, `crate::`, `super::`, a child module; see the notes below), Python (`import` and `from … import`, absolute and relative; see the notes below), JavaScript/TypeScript (relative `import`/`require`), Go (imports matching the module path from `go.mod`), and Kaikai (`import a.b.c`, including the `as` and `.{…}` forms). External dependencies (crates, npm packages, the Kaikai stdlib) are ignored.
+Supports Elixir (every module referred to in the code, with `alias` undone; see the notes below), Rust (every path that names a module of the workspace: `use`, `crate::`, `super::`, a child module; see the notes below), Python (`import` and `from … import`, absolute and relative; see the notes below), JavaScript/TypeScript (relative `import`/`require`), Go (imports of the packages of the repository, by the module path of each `go.mod`; see the notes below), and Kaikai (`import a.b.c`, including the `as` and `.{…}` forms). External dependencies (crates, npm packages, the Kaikai stdlib) are ignored.
 
 Files in any other language are left out of the graph instead of being listed with zero dependencies. The table footer, the `unsupported` array of the JSON output and the `unsupported:N` field of the short format say how many files were skipped, so "not measured" is never shown as "no dependencies".
 
@@ -42,6 +42,14 @@ Python notes:
 - An absolute import is looked up from each directory above the importing file that is not itself a package (it holds no `__init__.py`), nearest first, and from the `src` directory under each. That covers a project run from its root, a `src` layout with `tests/` beside it, and several projects in one repository. Then come the roots the nearest `pyproject.toml` above declares: where the build backend finds the packages (`where` and `package-dir` of setuptools, `packages` of Poetry, `sources` and `packages` of Hatch, `python-source` of maturin, `package-dir` of PDM, `module-root` of uv) and what pytest adds (`pythonpath`). What is found under none of them is external: the standard library, installed packages.
 - For `km impact`, `test_*.py`, `*_test.py` and `tests.py` are tests, and `conftest.py` is test support, which protects nothing; `__main__.py`, `setup.py` and `manage.py` are entry points, and so is what sits under `management/commands`.
 - Not seen: modules named at run time (`importlib`, `__import__`, Django settings and `INSTALLED_APPS`), roots added at run time (`sys.path`, `PYTHONPATH`, a `.pth` file) or declared in `setup.py`, `setup.cfg` or `pytest.ini`, and a namespace package spread over several roots. A name a package re-exports leads to its `__init__.py`, and from there to the module that defines it.
+
+Go notes:
+
+- An import names a package, and a package is a directory: the import depends on every `.go` file directly inside it, not on the ones in its subdirectories, which are other packages. Which file holds what was used is not read.
+- Test files (`_test.go`) are not part of what a package offers, and neither are the files the toolchain ignores (`_x.go`, `.x.go`). A test in an external test package (`package store_test`) that imports its own package depends on the files beside it.
+- Every `go.mod` under the analysed directory is read, so the modules of a repository with several resolve each from its own directory, with or without a `go.work`. An import of the module path itself is the package at the root of the module.
+- The files of one package use each other without importing, so there are no edges between them. The import graph is therefore a lower bound on the real dependencies.
+- Not seen: build constraints (`//go:build`, file names such as `x_linux.go`), so a file left out of a build still counts, and packages under `vendor/`.
 
 Kaikai notes:
 
