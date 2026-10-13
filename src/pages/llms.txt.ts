@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { t, pathInLang, type Lang } from '../i18n/ui';
+import { postPath, postSlug, postsOf } from '../lib/blog';
 import { docGroups, docPath, docsOf } from '../lib/docs';
 import { links } from '../lib/links';
 
@@ -13,6 +14,16 @@ async function docLinks(lang: Lang): Promise<string> {
     .map((slug) => {
       const { title, description } = docs.get(slug)!.data;
       return `- [${title}](${links.site}${docPath(slug, lang)}): ${description}`;
+    })
+    .join('\n');
+}
+
+// The posts of the blog of one language, as a list of links.
+async function postLinks(lang: Lang): Promise<string> {
+  return (await postsOf(lang))
+    .map((post) => {
+      const link = `${links.site}${postPath(postSlug(post, lang), lang)}`;
+      return `- [${post.data.title}](${link}): ${post.data.description}`;
     })
     .join('\n');
 }
@@ -37,6 +48,10 @@ Install with \`${links.install.cargo}\` or \`${links.install.brew}\`.
 
 ${await docLinks('en')}
 
+## Blog
+
+${await postLinks('en')}
+
 ## Español
 
 - [Inicio (es)](${url('/', 'es')}): qué mide Kimün, con salida real, el video y la lista de comandos.
@@ -47,6 +62,10 @@ ${await docLinks('en')}
 ## Documentación en español
 
 ${await docLinks('es')}
+
+## Blog en español
+
+${await postLinks('es')}
 
 ## Source
 

@@ -10,4 +10,14 @@ const docs = defineCollection({
   }),
 });
 
-export const collections = { docs };
+// The blog: laid out like the documentation, and ordered by date.
+const blog = defineCollection({
+  loader: glob({ pattern: '*/*.md', base: './src/content/blog' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    date: z.coerce.date(),
+  }),
+});
+
+export const collections = { docs, blog };

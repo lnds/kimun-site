@@ -1,0 +1,13 @@
+---
+import BlogPost from '../../../components/BlogPost.astro';
+import { postPaths, type Post } from '../../../lib/blog';
+
+export const getStaticPaths = () => postPaths('en');
+
+interface Props {
+  post: Post;
+}
+const { post } = Astro.props;
+---
+
+<BlogPost lang="en" post={post} />

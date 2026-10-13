@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { getLangFromUrl, t, type Lang } from '../i18n/ui';
+import { feedPath } from '../lib/feed';
 import { links } from '../lib/links';
 
 interface Props {
@@ -35,6 +36,8 @@ const inEn = `${links.site}/en${bare}`;
     <link rel="alternate" hreflang="es" href={inEs} />
     <link rel="alternate" hreflang="en" href={inEn} />
     <link rel="alternate" hreflang="x-default" href={inEs} />
+
+    <link rel="alternate" type="application/rss+xml" title={tt('blog.feed')} href={feedPath(lang)} />
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/madu-icon-32.png" />

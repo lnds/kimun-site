@@ -1,0 +1,74 @@
+---
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { t, pathInLang, type Lang } from '../i18n/ui';
+import { formatDate, type Post } from '../lib/blog';
+
+interface Props {
+  lang: Lang;
+  post: Post;
+}
+const { lang, post } = Astro.props;
+const tt = t(lang);
+const { Content } = await render(post);
+const { title, description, date } = post.data;
+---
+
+<Base lang={lang} title={`${title} · Kimün`} description={description}>
+  <div class="page backdrop">
+    <div class="container">
+      <article>
+        <header>
+          <p class="eyebrow">
+            <a href={pathInLang('/blog/', lang)}>{tt('blog.title')}</a> ·
+            <time datetime={date.toISOString().slice(0, 10)}>{formatDate(date, lang)}</time>
+          </p>
+          <h1>{title}</h1>
+          <p class="lead">{description}</p>
+          <p class="byline">{tt('blog.by')}</p>
+        </header>
+        <div class="rich-prose">
+          <Content />
+        </div>
+        <p class="back">
+          <a href={pathInLang('/blog/', lang)}>← {tt('blog.back')}</a>
+        </p>
+      </article>
+    </div>
+  </div>
+</Base>
+
+<style>
+  article {
+    max-width: 44rem;
+    margin-inline: auto;
+  }
+  header {
+    margin-bottom: var(--space-8);
+  }
+  .eyebrow a {
+    color: inherit;
+  }
+  h1 {
+    font-size: clamp(2rem, 4.4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+    margin-bottom: var(--space-4);
+  }
+  .byline {
+    margin-top: var(--space-4);
+    font-size: 0.92rem;
+    color: var(--fg-subtle);
+  }
+  .rich-prose {
+    font-size: 1.06rem;
+    line-height: 1.75;
+  }
+  .back {
+    margin-top: var(--space-16);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border);
+    font-weight: 600;
+  }
+</style>

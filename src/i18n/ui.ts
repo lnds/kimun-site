@@ -18,6 +18,7 @@ export const ui = {
     'nav.commands': 'Comandos',
     'nav.start': 'Empezar',
     'nav.docs': 'Docs',
+    'nav.blog': 'Blog',
     'nav.name': 'El nombre',
 
     'theme.toggle': 'Cambiar entre claro y oscuro',
@@ -134,6 +135,14 @@ export const ui = {
     'docs.prev': 'Anterior',
     'docs.next': 'Siguiente',
 
+    'blog.eyebrow': 'Blog',
+    'blog.title': 'Blog de Kimün',
+    'blog.lead':
+      'Notas sobre cómo medir el código, las ideas detrás de cada métrica y lo que va cambiando en km.',
+    'blog.by': 'Por Eduardo Díaz',
+    'blog.back': 'Todas las notas',
+    'blog.feed': 'Blog de Kimün (RSS)',
+
     'about.eyebrow': 'El nombre',
     'about.title': 'Kimün y Madu',
     'about.lead': 'De dónde viene el nombre, y quién es la pudú que lo acompaña.',
@@ -165,6 +174,7 @@ export const ui = {
     'nav.commands': 'Commands',
     'nav.start': 'Get started',
     'nav.docs': 'Docs',
+    'nav.blog': 'Blog',
     'nav.name': 'The name',
 
     'theme.toggle': 'Switch between light and dark',
@@ -279,6 +289,14 @@ export const ui = {
     'docs.pager': 'Previous and next page',
     'docs.prev': 'Previous',
     'docs.next': 'Next',
+
+    'blog.eyebrow': 'Blog',
+    'blog.title': 'The Kimün blog',
+    'blog.lead':
+      'Notes on measuring code, the ideas behind each metric and what is changing in km.',
+    'blog.by': 'By Eduardo Díaz',
+    'blog.back': 'All posts',
+    'blog.feed': 'The Kimün blog (RSS)',
 
     'about.eyebrow': 'The name',
     'about.title': 'Kimün and Madu',

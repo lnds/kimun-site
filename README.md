@@ -17,6 +17,7 @@ npm run preview
 - `src/i18n/ui.ts`: every text of the site, in both languages.
 - `src/lib/output.ts`: the terminal output shown on the pages.
 - `src/content/docs/`: the documentation, one Markdown file per page, in a folder per language with the same file names in both.
+- `src/content/blog/`: the blog, one Markdown file per post, in a folder per language with the same file names in both. Each post carries its `title`, `description` and `date`.
 - `src/lib/docs.ts`: the order of the documentation; a new page needs a place there.
 - `src/lib/links.ts`: external links, install commands and the videos.
 - `src/styles/global.css`: colors and shared styles, for the light and dark themes.
