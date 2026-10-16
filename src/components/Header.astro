@@ -72,7 +72,13 @@ const otherPath = pathInLang(Astro.url.pathname.replace(/^\/en/, '') || '/', oth
           />
         </svg>
       </a>
-      <a href={otherPath} class="lang-switch" aria-label={`Switch to ${otherLang}`}>
+      <a
+        href={otherPath}
+        class="lang-switch"
+        aria-label={`Switch to ${otherLang}`}
+        data-lang={otherLang}
+        onclick="try { localStorage.setItem('kimun-lang', this.dataset.lang); } catch (e) {}"
+      >
         {otherLang === 'en' ? 'EN' : 'ES'}
       </a>
     </div>
