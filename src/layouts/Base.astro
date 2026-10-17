@@ -60,6 +60,29 @@ const inEn = `${links.site}/en${bare}`;
     <meta name="twitter:description" content={desc} />
     <meta name="twitter:image" content={card} />
 
+    {lang === 'es' && (
+      <script is:inline define:vars={{ inEn }}>
+        // A reader whose browser prefers English over Spanish gets the English
+        // page, unless they chose Spanish with the language switch. Crawlers
+        // stay, so each language keeps its own indexed pages.
+        try {
+          var chosen = localStorage.getItem('kimun-lang');
+          var langs = navigator.languages || [navigator.language || ''];
+          var first = '';
+          for (var i = 0; i < langs.length && !first; i++) {
+            var code = String(langs[i]).toLowerCase().slice(0, 2);
+            if (code === 'es' || code === 'en') first = code;
+          }
+          var bot = /bot|crawl|spider|slurp|preview/i.test(navigator.userAgent);
+          if (!bot && (chosen || first) === 'en') {
+            location.replace(inEn + location.search + location.hash);
+          }
+        } catch (e) {
+          /* localStorage unavailable: stay on this page */
+        }
+      </script>
+    )}
+
     <script is:inline>
       // Runs before first paint, so a stored choice never flashes the other
       // theme. No stored choice means no attribute at all, and the CSS falls
