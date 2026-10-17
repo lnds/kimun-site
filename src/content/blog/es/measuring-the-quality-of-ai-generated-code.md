@@ -75,7 +75,7 @@ El comando estrella de Kimün es `km score`. Combina cinco dimensiones en una so
 | Duplicación | 20% | Porcentaje de código duplicado |
 | Esfuerzo de Halstead | 20% | Esfuerzo mental por línea de código |
 | Complejidad por indentación | 15% | Variación de la profundidad de anidamiento |
-| Tamaño de archivo | 15% | Rango óptimo: de 50 a 300 líneas |
+| Tamaño de archivo | 15% | Puntaje completo hasta 500 líneas; baja a 0 en 4.000 |
 
 Correrlo es trivial:
 

@@ -75,7 +75,7 @@ Kimün's flagship command is `km score`. It combines five dimensions into a sing
 | Duplication | 20% | Percentage of duplicated code |
 | Halstead effort | 20% | Mental effort per line of code |
 | Indentation complexity | 15% | Variation in nesting depth |
-| File size | 15% | Optimal range: 50 to 300 lines |
+| File size | 15% | Full score up to 500 lines, falling to 0 at 4,000 |
 
 Running it is trivial:
 
