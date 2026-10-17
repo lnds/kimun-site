@@ -34,7 +34,7 @@ Up to v0.35 File Size weighed 15%, and the others 30%, 20%, 15% and 20%. It weig
 | Maintainability Index | 30% | Verifysoft MI, normalized to 0-100 |
 | Cyclomatic Complexity | 20% | Max complexity per file |
 | Duplication | 15% | Project-wide duplicate code % |
-| Indentation Complexity | 16% | Stddev of indentation depth |
+| Indentation Complexity | 15% | Stddev of indentation depth |
 | Halstead Effort | 15% | Mental effort per LOC |
 | File Size | 5% | Full score up to 500 LOC, falling to 0 at 4,000 |
 
