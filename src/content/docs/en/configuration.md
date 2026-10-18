@@ -36,7 +36,7 @@ max_duplicates = 10    # CI gate: fail if duplicate groups exceed N
 max_dup_ratio  = 5.0   # CI gate: fail if duplicated-lines ratio exceeds this %
 
 [score]
-model      = "cogcom"  # scoring model: cogcom (default) or legacy
+model      = "cogcom"  # scoring model: cogcom (default), cogcom-0.35 or legacy
 fail_below = "B-"      # CI gate: fail if health score is below this grade
 
 [age]

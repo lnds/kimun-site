@@ -26,8 +26,8 @@ Options:
 | Flag | Description |
 |------|-------------|
 | `--format {table,json,short,terse}` | Output format (default: table) |
-| `--include-tests` | Include test files in analysis (excluded by default) |
-| `--top N` | Show only the top N files (default: 20) |
+| `--include-tests` | Include tests, examples and benchmarks in analysis (excluded by default) |
+| `--top N` | Rows of the table (default: 20); JSON lists every file unless `--top` is given |
 | `--sort-by METRIC` | Sort by `score`, `commits`, or `complexity` (default: `score`) |
 | `--since DURATION` | Only consider commits since this time (e.g. `30d`, `6m`, `1y`) |
 | `--complexity METRIC` | `indent` (default, Thornhill) or `cycom` (cyclomatic) |

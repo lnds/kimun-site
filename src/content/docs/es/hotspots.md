@@ -26,8 +26,8 @@ Opciones:
 | Flag | Descripción |
 |------|-------------|
 | `--format {table,json,short,terse}` | Formato de salida (por defecto: table) |
-| `--include-tests` | Incluye los archivos de test en el análisis (excluidos por defecto) |
-| `--top N` | Muestra solo los N primeros archivos (por defecto: 20) |
+| `--include-tests` | Incluye los tests, ejemplos y benchmarks en el análisis (excluidos por defecto) |
+| `--top N` | Filas de la tabla (por defecto: 20); el JSON lista todos los archivos salvo que se indique `--top` |
 | `--sort-by METRIC` | Ordena por `score`, `commits` o `complexity` (por defecto: `score`) |
 | `--since DURATION` | Considera solo los commits desde este momento (p. ej. `30d`, `6m`, `1y`) |
 | `--complexity METRIC` | `indent` (por defecto, Thornhill) o `cycom` (ciclomática) |

@@ -11,8 +11,8 @@ Los archivos que no son código (Markdown, TOML, JSON, etc.) se excluyen automá
 
 ```bash
 km score [path]
-km score --model legacy [path]    # modelo de MI + ciclomática
 km score --model cogcom-0.35 [path]  # los pesos hasta la v0.35
+km score --model legacy [path]    # modelo de MI + ciclomática
 ```
 
 ## Dimensiones y pesos (por defecto: cogcom)
@@ -26,6 +26,19 @@ km score --model cogcom-0.35 [path]  # los pesos hasta la v0.35
 | Tamaño de archivo | 10% | Puntaje completo hasta 500 LOC; baja a 0 en 4.000 |
 
 Hasta la v0.35 el tamaño de archivo pesaba 15%, y las demás dimensiones 30%, 20%, 15% y 20%. Ahora pesa menos porque el tamaño ya influye en las otras dimensiones: un archivo grande tiene más código que puede ser complejo, y el puntaje del proyecto es un promedio ponderado por líneas de código. Los estudios sobre módulos encuentran que los defectos crecen menos que proporcionalmente con el tamaño, así que partir un archivo no lo hace por sí solo menos propenso a fallas; lo que el tamaño mide bien es el costo de leerlo y cambiarlo. Los cinco puntos pasaron a las demás dimensiones en proporción a sus pesos. `--model cogcom-0.35` calcula con los pesos anteriores, para comparar con resultados previos o para mantener una compuerta de CI donde estaba.
+
+## Modelo experimental (--experimental)
+
+`km score --experimental` calcula con el Maintainability Index (variante de Visual Studio, 0–100) en lugar del esfuerzo de Halstead, con su mismo peso (21%), y muestra al lado el puntaje del modelo por defecto, a partir de la misma medición. El MI pondera juntos el volumen de Halstead, la complejidad ciclomática y el tamaño; un archivo obtiene 0 con MI 0, 40 con 5, 60 con 10, 80 con 20 (donde Visual Studio pasa a verde), 90 con 30, 97 con 45 y 100 desde 60. A diferencia de las demás dimensiones, el MI del proyecto es el promedio simple de sus archivos, sin ponderar por líneas: el MI ya baja con el tamaño de un archivo, y ponderarlo contaría el tamaño dos veces. Sirve para probar la dimensión, no para compuertas: no se puede combinar con `--model` ni con `--trend`.
+
+En los proyectos donde se probó, el puntaje experimental queda a unos 1,5 puntos del normal, en el mismo orden: el MI sigue de cerca a Halstead, del que en buena parte se calcula. Un proyecto cuyo peor código está en unos pocos archivos grandes entre muchos chicos obtiene más que con el modelo por defecto (jq: F 51,3 contra D 60,5), porque cada archivo cuenta una vez.
+
+```
+ Experimental: Maintainability Index (Visual Studio) in place of Halstead Effort.
+ Default model: B+ (83.2)  →  experimental: B (81.8), -1.5
+```
+
+`--format json` agrega un objeto `baseline` con el puntaje y la nota del modelo por defecto; `--format short` agrega una línea `baseline`.
 
 ## Dimensiones y pesos (--model legacy)
 
@@ -59,13 +72,14 @@ Opciones:
 | Flag | Descripción |
 |------|-------------|
 | `--model MODEL` | Modelo de puntaje: `cogcom` (por defecto), `cogcom-0.35` (los pesos hasta la v0.35) o `legacy` (MI + ciclomática) |
+| `--experimental` | Calcula con el Maintainability Index en lugar del esfuerzo de Halstead, comparado con el modelo por defecto |
 | `--trend [REF]` | Compara el puntaje actual con una ref de git (por defecto: `HEAD`). Muestra el cambio: `B- → B (+2.3)`. Útil para revisar un PR: `--trend origin/main` |
 | `--fail-if-worse` | Con `--trend`: termina con código 1 si el puntaje bajó más que `--gate-tolerance` |
 | `--gate-tolerance POINTS` | Caída de puntaje que `--fail-if-worse` permite antes de fallar (por defecto: `0.01` con `--gate-scope project`, `0.5` con `--gate-scope changed`). Compara los puntajes sin redondear |
 | `--gate-scope {project,changed}` | Qué compara `--fail-if-worse` (por defecto: `project`, el puntaje agregado). `changed` mira solo los archivos que toca el diff: falla si un archivo modificado o renombrado termina por debajo del puntaje que el proyecto tenía en la ref después de bajar más que `--gate-tolerance`, o si crecen las líneas duplicadas del proyecto. Los archivos por encima del puntaje del proyecto, los archivos nuevos y los eliminados nunca la hacen fallar, así que quitar código sano no puede empeorar el veredicto. El informe lista cada archivo modificado con su puntaje de antes y de después |
 | `--fail-below GRADE` | Con `--trend`: termina con código 1 si la nota está por debajo de `GRADE` (p. ej. `B-`). Se puede sobrescribir en `.kimun.toml` |
 | `--format {table,json,short,terse}` | Formato de salida (por defecto: table) |
-| `--include-tests` | Incluye los archivos de test en el análisis (excluidos por defecto) |
+| `--include-tests` | Incluye los tests, ejemplos y benchmarks en el análisis (excluidos por defecto) |
 | `--bottom N` | Cantidad de peores archivos que se muestran en "needs attention" (por defecto: 10) |
 | `--min-lines N` | Mínimo de líneas para un bloque duplicado (por defecto: 6) |
 

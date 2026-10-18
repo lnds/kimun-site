@@ -3,7 +3,7 @@ title: "km authors"
 description: "Per-author ownership summary"
 ---
 
-Summarizes code ownership across the project by author. Aggregates `git blame` data to answer "who knows what?" at the team level — complementing `km knowledge` (per-file view) with a team-level view.
+Summarizes code ownership across the project by author. Aggregates `git blame` data to answer "who knows what?" at the team level — complementing `km knowledge` (per-file view) with a team-level view. Blame is read as `km knowledge` reads it (see [Who wrote each line](/en/docs/knowledge#who-wrote-each-line)). "Last Active" is the date of the author's last commit, whatever it touched.
 
 ```bash
 km authors [path]

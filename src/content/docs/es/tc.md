@@ -30,11 +30,16 @@ Opciones:
 | Flag | Descripción |
 |------|-------------|
 | `--format {table,json,short,terse}` | Formato de salida (por defecto: table) |
-| `--top N` | Muestra solo los N primeros pares de archivos (por defecto: 20) |
+| `--top N` | Filas de la tabla (por defecto: 20); el JSON lista todos los pares salvo que se indique `--top` |
 | `--sort-by METRIC` | Ordena por `strength` o `shared` (por defecto: `strength`) |
 | `--since DURATION` | Considera solo los commits desde este momento (p. ej. `6m`, `1y`, `30d`) |
 | `--min-degree N` | Mínimo de commits por archivo para incluirlo (por defecto: 3) |
+| `--min-shared N` | Mínimo de commits que dos archivos deben compartir para formar un par (por defecto: 3) |
+| `--max-changeset N` | Ignora como evidencia de acoplamiento los commits que tocan más de N archivos (por defecto: 30) |
 | `--min-strength F` | Fuerza mínima de acoplamiento que se muestra (p. ej. `0.5` para ver solo el fuerte) |
+| `--include-ext`, `--exclude-ext`, `--exclude-dir`, `--exclude` | Filtros de ruta, aplicados a las rutas del historial |
+
+Solo se emparejan archivos que todavía existen en el árbol de trabajo, y solo código: los archivos lock, los manifiestos, el YAML de CI y la documentación quedan fuera. Un commit masivo (más de `--max-changeset` archivos) relaciona archivos por accidente y se omite, igual que un revert junto con el commit que revierte (un mensaje que empieza con `Revert "` y nombra el commit): juntos no cambiaron nada. Los renombres no se siguen: un archivo se empareja con la ruta que tiene hoy.
 
 Ejemplo de salida:
 

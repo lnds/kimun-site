@@ -27,13 +27,15 @@ km hal [path]
 
 Un esfuerzo, un volumen y una cantidad de bugs más altos indican código más complejo y más propenso a errores.
 
+En TypeScript se dejan fuera las declaraciones que no ejecutan nada (`interface`, los alias `type`, `import type`, `export type { … }`, `declare`): un archivo que solo tiene tipos no tiene métricas de Halstead, así que no llega a `km miv` ni a la dimensión de Halstead de `km score`.
+
 Opciones:
 
 | Flag | Descripción |
 |------|-------------|
 | `--format {table,json,short,terse}` | Formato de salida (por defecto: table) |
-| `--include-tests` | Incluye los archivos de test en el análisis (excluidos por defecto) |
-| `--top N` | Muestra solo los N primeros archivos (por defecto: 20) |
+| `--include-tests` | Incluye los tests, ejemplos y benchmarks en el análisis (excluidos por defecto) |
+| `--top N` | Filas de la tabla (por defecto: 20); el JSON lista todos los archivos salvo que se indique `--top` |
 | `--sort-by METRIC` | Ordena por `effort`, `volume` o `bugs` (por defecto: `effort`) |
 
 Ejemplo de salida:
@@ -51,4 +53,4 @@ Halstead Complexity Metrics
 
 ## Lenguajes soportados
 
-Rust, Python, JavaScript, TypeScript, Go, C, C++, C#, Java, Objective-C, PHP, Dart, Ruby, Kotlin, Swift, Shell (Bash/Zsh).
+Rust, Python, JavaScript, JSX, TypeScript, Go, C, C++, C#, Java, Objective-C, PHP, Dart, Ruby, Kotlin, Swift, Shell (Bash/Zsh), Elixir, Kaikai, Fortran, Pascal (Delphi).
