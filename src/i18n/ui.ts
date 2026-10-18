@@ -129,6 +129,11 @@ export const ui = {
     'docs.title': 'Documentación',
     'docs.lead':
       'Cada comando de km con sus opciones, sus fórmulas y ejemplos de salida, más la configuración y los lenguajes soportados.',
+    'docs.conventions': 'Dos convenciones valen para todos los comandos:',
+    'docs.conventions.top':
+      '<strong><code>--top N</code></strong> limita las filas de una tabla (20 por defecto), y el JSON solo cuando se indica; los totales de una tabla, los resúmenes <code>short</code> y <code>terse</code> y las anotaciones de CI (<code>github</code>, <code>codeclimate</code>) cubren siempre todos los archivos. Una fila de totales sobre más archivos de los que muestra lo dice: <code>Total (30 files, 20 shown)</code>.',
+    'docs.conventions.paths':
+      '<strong>Las rutas</strong> se muestran relativas a la raíz del repositorio git, o al directorio analizado fuera de uno, sin <code>./</code> al inicio, desde cualquier directorio en que se ejecute km y como sea que se escriba la ruta, así que la salida de dos comandos se puede cruzar.',
     'docs.group.guide': 'Para empezar',
     'docs.group.reference': 'Referencia',
     'docs.pager': 'Página anterior y siguiente',
@@ -284,6 +289,11 @@ export const ui = {
     'docs.title': 'Documentation',
     'docs.lead':
       'Every km command with its options, its formulas and sample output, plus the configuration and the supported languages.',
+    'docs.conventions': 'Two conventions hold for every command:',
+    'docs.conventions.top':
+      '<strong><code>--top N</code></strong> limits the rows of a table (20 by default), and JSON only when given; the totals of a table, the <code>short</code> and <code>terse</code> summaries and the CI annotations (<code>github</code>, <code>codeclimate</code>) always cover every file. A totals row over more files than it shows says so: <code>Total (30 files, 20 shown)</code>.',
+    'docs.conventions.paths':
+      '<strong>Paths</strong> are shown relative to the root of the git repository, or to the analyzed directory outside one, without a leading <code>./</code>, whatever directory km runs from and however the path argument is written, so the output of two commands can be joined.',
     'docs.group.guide': 'Getting started',
     'docs.group.reference': 'Reference',
     'docs.pager': 'Previous and next page',
