@@ -30,8 +30,8 @@ Opciones:
 | Flag | Descripción |
 |------|-------------|
 | `--format {table,json,short,terse}` | Formato de salida (por defecto: table) |
-| `--include-tests` | Incluye los archivos de test en el análisis (excluidos por defecto) |
-| `--top N` | Muestra solo los N primeros archivos (por defecto: 20) |
+| `--include-tests` | Incluye los tests, ejemplos y benchmarks en el análisis (excluidos por defecto) |
+| `--top N` | Filas de la tabla (por defecto: 20); el JSON lista todos los archivos salvo que se indique `--top` |
 | `--sort-by METRIC` | Ordena por `mi` (ascendente), `volume`, `complexity` o `loc` (por defecto: `mi`) |
 
 Ejemplo de salida:
@@ -45,5 +45,7 @@ Maintainability Index (Visual Studio)
  src/main.rs               11189.6    16   241   17.5  yellow
  src/loc/report.rs          6257.0    13   185   22.2  green
 ──────────────────────────────────────────────────────────────────────
- Total (3 files)                         1157   13.2
+ Total (3 files)                         1157    7.2
 ```
+
+La fila Total es el MI de los archivos ponderado por sus líneas de código, con todo valor bajo 0 tomado como 0, igual que lo toma el modelo legacy de `km score`: unos pocos archivos chicos no pesan más que el grueso del código.

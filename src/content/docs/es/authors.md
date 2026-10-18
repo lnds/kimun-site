@@ -3,7 +3,7 @@ title: "km authors"
 description: "Resumen de propiedad por autor"
 ---
 
-Resume la propiedad del código de todo el proyecto por autor. Agrupa los datos de `git blame` para responder "¿quién sabe qué?" a nivel de equipo: complementa a `km knowledge` (vista por archivo) con una vista del equipo.
+Resume la propiedad del código de todo el proyecto por autor. Agrupa los datos de `git blame` para responder "¿quién sabe qué?" a nivel de equipo: complementa a `km knowledge` (vista por archivo) con una vista del equipo. El blame se lee igual que en `km knowledge` (ver [Quién escribió cada línea](/docs/knowledge#quién-escribió-cada-línea)). "Last Active" es la fecha del último commit del autor, toque lo que toque.
 
 ```bash
 km authors [path]

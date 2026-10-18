@@ -30,8 +30,8 @@ Options:
 | Flag | Description |
 |------|-------------|
 | `--format {table,json,short,terse}` | Output format (default: table) |
-| `--include-tests` | Include test files in analysis (excluded by default) |
-| `--top N` | Show only the top N files (default: 20) |
+| `--include-tests` | Include tests, examples and benchmarks in analysis (excluded by default) |
+| `--top N` | Rows of the table (default: 20); JSON lists every file unless `--top` is given |
 | `--sort-by METRIC` | Sort by `mi` (ascending), `volume`, `complexity`, or `loc` (default: `mi`) |
 
 Example output:
@@ -45,5 +45,7 @@ Maintainability Index (Visual Studio)
  src/main.rs               11189.6    16   241   17.5  yellow
  src/loc/report.rs          6257.0    13   185   22.2  green
 ──────────────────────────────────────────────────────────────────────
- Total (3 files)                         1157   13.2
+ Total (3 files)                         1157    7.2
 ```
+
+The Total row is the MI of the files weighted by their code lines, with any value below 0 taken as 0, as the legacy model of `km score` takes it: a few small files do not outweigh the bulk of the code.

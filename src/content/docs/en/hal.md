@@ -27,13 +27,15 @@ km hal [path]
 
 Higher effort, volume, and bugs indicate more complex and error-prone code.
 
+In TypeScript, declarations that run nothing (`interface`, `type` aliases, `import type`, `export type { … }`, `declare`) are left out: a file of types alone has no Halstead metrics, so it does not reach `km miv` or the Halstead dimension of `km score`.
+
 Options:
 
 | Flag | Description |
 |------|-------------|
 | `--format {table,json,short,terse}` | Output format (default: table) |
-| `--include-tests` | Include test files in analysis (excluded by default) |
-| `--top N` | Show only the top N files (default: 20) |
+| `--include-tests` | Include tests, examples and benchmarks in analysis (excluded by default) |
+| `--top N` | Rows of the table (default: 20); JSON lists every file unless `--top` is given |
 | `--sort-by METRIC` | Sort by `effort`, `volume`, or `bugs` (default: `effort`) |
 
 Example output:
@@ -51,4 +53,4 @@ Halstead Complexity Metrics
 
 ## Supported languages
 
-Rust, Python, JavaScript, TypeScript, Go, C, C++, C#, Java, Objective-C, PHP, Dart, Ruby, Kotlin, Swift, Shell (Bash/Zsh).
+Rust, Python, JavaScript, JSX, TypeScript, Go, C, C++, C#, Java, Objective-C, PHP, Dart, Ruby, Kotlin, Swift, Shell (Bash/Zsh), Elixir, Kaikai, Fortran, Pascal (Delphi).

@@ -53,7 +53,7 @@ export const ui = {
       'De A++ a F--, calculada con cinco dimensiones: complejidad cognitiva, duplicación, indentación, esfuerzo de Halstead y tamaño de los archivos. Y la lista de archivos que conviene mirar primero.',
     'features.static.title': 'Un comando para cada medida',
     'features.static.body':
-      'Líneas de código en más de cuarenta lenguajes, código duplicado, complejidad ciclomática y cognitiva, índice de mantenibilidad, code smells y dependencias entre archivos.',
+      'Líneas de código en más de sesenta lenguajes, código duplicado, complejidad ciclomática y cognitiva, índice de mantenibilidad, code smells y dependencias entre archivos.',
     'features.history.title': 'La historia, leída desde git',
     'features.history.body':
       'Hotspots: archivos complejos que cambian seguido. Mapa de conocimiento: quién domina cada archivo. Acoplamiento temporal: archivos que cambian siempre juntos, aunque el código no lo diga.',
@@ -61,7 +61,7 @@ export const ui = {
     'features.impact.body':
       'Antes de fusionar, pregunta qué alcanza tu cambio: qué archivos llaman a las funciones que tocaste, cuáles tienen tests y dónde probablemente falta uno.',
     'features.impact.note':
-      'Funciona hoy para Elixir, Go, JavaScript/TypeScript, Kaikai, Python y Rust. En Elixir y Python, además, acota el cambio a las funciones que tocaste.',
+      'Funciona hoy para C, C++, C#, Elixir, Go, Java, JavaScript/TypeScript, Kaikai, Python, Ruby y Rust. En Elixir y Python, además, acota el cambio a las funciones que tocaste.',
     'features.gate.title': 'Una compuerta en CI',
     'features.gate.body':
       'Compara tu rama con la principal. Si un archivo empeora o crece el código duplicado, el cambio no pasa.',
@@ -208,7 +208,7 @@ export const ui = {
       'From A++ to F--, out of five dimensions: cognitive complexity, duplication, indentation, Halstead effort and file size. Plus the list of files worth looking at first.',
     'features.static.title': 'A command for each measure',
     'features.static.body':
-      'Lines of code in more than forty languages, duplicated code, cyclomatic and cognitive complexity, maintainability index, code smells and dependencies between files.',
+      'Lines of code in more than sixty languages, duplicated code, cyclomatic and cognitive complexity, maintainability index, code smells and dependencies between files.',
     'features.history.title': 'The history, read from git',
     'features.history.body':
       'Hotspots: complex files that change often. Knowledge map: who owns each file. Temporal coupling: files that always change together, even when the code does not say so.',
@@ -216,7 +216,7 @@ export const ui = {
     'features.impact.body':
       'Before you merge, ask what your change reaches: which files call the functions you touched, which of them have tests, and where one is probably missing.',
     'features.impact.note':
-      'It works today for Elixir, Go, JavaScript/TypeScript, Kaikai, Python and Rust. In Elixir and Python it also narrows the change to the functions you touched.',
+      'It works today for C, C++, C#, Elixir, Go, Java, JavaScript/TypeScript, Kaikai, Python, Ruby and Rust. In Elixir and Python it also narrows the change to the functions you touched.',
     'features.gate.title': 'A gate in CI',
     'features.gate.body':
       'It compares your branch with the main one. If a file gets worse or duplicated code grows, the change does not pass.',
