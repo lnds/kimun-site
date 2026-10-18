@@ -20,6 +20,14 @@ const docs = await docsOf(lang);
         <p class="lead">{tt('docs.lead')}</p>
       </header>
 
+      <section class="conventions">
+        <p>{tt('docs.conventions')}</p>
+        <ul>
+          <li set:html={tt('docs.conventions.top')} />
+          <li set:html={tt('docs.conventions.paths')} />
+        </ul>
+      </section>
+
       <div class="groups">
         {docGroups.map(({ title, slugs }) => (
           <section>
@@ -47,6 +55,20 @@ const docs = await docsOf(lang);
 </Base>
 
 <style>
+  .conventions {
+    max-width: 48rem;
+    margin-bottom: var(--space-8);
+    color: var(--fg-muted);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+  .conventions ul {
+    margin: var(--space-2) 0 0;
+    padding-left: 1.2rem;
+  }
+  .conventions li + li {
+    margin-top: var(--space-2);
+  }
   .groups {
     columns: 3 18rem;
     column-gap: var(--space-8);
