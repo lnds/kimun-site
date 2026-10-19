@@ -50,6 +50,10 @@ min_strength = 0.5  # only show pairs with coupling strength >= this value
 [hotspots]
 complexity = "cogcom"  # complexity metric: indent (default), cycom, or cogcom
 
+[map]
+llm_friendly = 95  # km map --color-by llm: desde este puntaje un archivo es apto para LLM (por defecto: 95)
+llm_risk     = 70  # bajo este puntaje es un riesgo para LLM (por defecto: 70)
+
 [impact]
 inert = ["scripts/**"]  # changed files that reach nothing, besides documentation
 entry_points = ["**/endpoint.ex"]  # files run rather than used, besides tasks and scripts
