@@ -3,7 +3,7 @@ title: "km hotspots"
 description: "Análisis de hotspots"
 ---
 
-Encuentra hotspots: archivos que cambian con frecuencia Y además tienen alta complejidad. Se basa en el método de Adam Thornhill ("Your Code as a Crime Scene").
+Encuentra hotspots: archivos que cambian con frecuencia Y además tienen alta complejidad. Se basa en el método de Adam Tornhill ("Your Code as a Crime Scene").
 
 ```bash
 km hotspots [path]
@@ -17,7 +17,7 @@ Score = Commits × Complexity
 
 Los archivos con puntaje alto concentran el riesgo: cambian mucho y son complejos, así que son los candidatos más valiosos para refactorizar.
 
-Por defecto, la complejidad se mide con la **indentación total** (la suma de los niveles lógicos de indentación de todas las líneas de código), siguiendo el método original de Thornhill en "Your Code as a Crime Scene". Usa `--complexity cycom` para medirla con la complejidad ciclomática.
+Por defecto, la complejidad se mide con la **indentación total** (la suma de los niveles lógicos de indentación de todas las líneas de código), siguiendo el método original de Tornhill en "Your Code as a Crime Scene". Usa `--complexity cycom` para medirla con la complejidad ciclomática.
 
 Requiere un repositorio git. Los commits de merge se excluyen de la cuenta.
 
@@ -30,7 +30,7 @@ Opciones:
 | `--top N` | Filas de la tabla (por defecto: 20); el JSON lista todos los archivos salvo que se indique `--top` |
 | `--sort-by METRIC` | Ordena por `score`, `commits` o `complexity` (por defecto: `score`) |
 | `--since DURATION` | Considera solo los commits desde este momento (p. ej. `30d`, `6m`, `1y`) |
-| `--complexity METRIC` | `indent` (por defecto, Thornhill) o `cycom` (ciclomática) |
+| `--complexity METRIC` | `indent` (por defecto, Tornhill) o `cycom` (ciclomática) |
 
 Unidades de duración: `d` (días), `m` (meses, aprox. 30 días), `y` (años, aprox. 365 días).
 
@@ -48,7 +48,7 @@ Hotspots (Commits × Total Indent Complexity)
  src/report/mod.rs           Rust       4        998       3992
 ──────────────────────────────────────────────────────────────────────────────
 
-Score = Commits × Total Indentation (Thornhill method).
+Score = Commits × Total Indentation (Tornhill method).
 High-score files are change-prone and complex — prime refactoring targets.
 ```
 

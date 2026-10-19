@@ -124,6 +124,10 @@ Notas sobre Kaikai:
 | `--cycles-only` | Muestra solo los archivos que participan en un ciclo de dependencias |
 | `--sort-by METRIC` | Ordena por `fan-out` (por defecto) o `fan-in` |
 | `--top N` | Filas de la tabla (por defecto: 20); el JSON lista todos los archivos salvo que se indique `--top` |
+| `--matrix` | Muestra la matriz de estructura de dependencias en vez de la tabla |
+| `--depth N` | Niveles de directorios que la matriz muestra expandidos (por defecto: 1) |
+| `--focus DIR` | Expande solo este directorio de la matriz y los que están sobre él |
+| `--html FILE` | Escribe la matriz como una página HTML interactiva en este archivo |
 
 Ejemplo de salida:
 
@@ -142,4 +146,34 @@ Dependency cycles: 14
     cogcom/analyzer.rs
     cogcom/detection.rs
     cogcom/report.rs
+```
+
+Matriz de estructura de dependencias:
+
+`--matrix` muestra qué archivo depende de cuál como una matriz de estructura de dependencias (DSM), como la dibuja IntelliJ IDEA. Filas y columnas son los mismos directorios y archivos, en el mismo orden; una columna lleva solo el número de su fila, para que la matriz siga siendo angosta. Una celda cuenta los archivos de su columna que usan archivos de su fila. Un directorio colapsado (`▸`) cuenta por todos los archivos bajo él; uno expandido (`▾`) encabeza las filas de lo que contiene. La raíz es el directorio más profundo que contiene todos los archivos, y un directorio que contiene solo otro se muestra junto con él (`lib/core/`).
+
+Los hijos de cada directorio se ordenan de modo que un hermano va antes que los hermanos que usa: en un sistema en capas toda marca queda bajo la diagonal. Los hermanos que se usan entre sí forman un ciclo y quedan juntos, primero los que usan más del ciclo de lo que el ciclo los usa a ellos; el resto conserva el orden de sus nombres. Solo los usos que cargan o compilan ordenan las filas: los `type` y `deferred`, que no forman ciclos, se dibujan atenuados.
+
+Una marca sobre la diagonal va contra las capas. La lista bajo la matriz da cada una con los usos detrás de ella, cinco como máximo, y por qué está ahí: en un ciclo entre archivos (`!` después del número, en rojo en una terminal), contra las capas cuando solo los directorios forman un ciclo (amarillo), o solo de tipos o diferido (atenuado). No hay colores cuando la salida no es una terminal o cuando `NO_COLOR` está definida.
+
+`--depth N` expande los directorios que están a menos de N niveles bajo la raíz; `--focus DIR` expande solo ese directorio y los que están sobre él, con la ruta escrita como km la muestra. `--cycles-only` deja los archivos en ciclos. `--top` no se aplica a la matriz. Con `--format json` se entrega para herramientas y modelos: `rows` en su orden (`number`, `path`, un directorio termina en `/`, `level`), `groups` con los directorios expandidos, `cells` con `row`, `column`, `count`, `mark` (`cycle`, `layering`, `weak` o `plain`) y los `uses` detrás de cada una (`from`, `to`, `kind`, `cycle`), y `above_diagonal` como pares `[row, column]`. Una matriz más ancha que la terminal no se imprime: un `--depth` menor o `--focus` la angostan.
+
+`--html FILE` escribe la matriz como un único archivo HTML que no necesita nada más, en tema claro y oscuro. Abre como la mostraría el texto, y en él un directorio se expande y se colapsa con un clic en su triángulo (o todos a la vez), un clic en un nombre marca en dos colores lo que usa y lo que lo usa, y un clic en una celda lista los usos detrás de ella. Los encabezados quedan fijos al desplazar la matriz, cada celda se sombrea según su número y un nombre muestra su ruta completa al pasar el cursor. El ancho de la terminal no la limita.
+
+```
+$ km deps --matrix --focus shop/core
+Dependency Structure Matrix
+A cell counts the files of its column that use files of its row; ! marks a cycle.
+
+                1  2  3  4  5
+ 1 main.py      ·
+ 2 ▸ billing/   1  ·
+ 3 ▸ web/       1  1  ·
+   ▾ core/
+ 4   db.py            1  · 1!
+ 5   models.py     1  2 1!  ·
+
+Above the diagonal: 1 cell
+  shop/core/models.py → shop/core/db.py: 1, in a cycle
+    shop/core/models.py → shop/core/db.py
 ```

@@ -31,7 +31,7 @@ async function postLinks(lang: Lang): Promise<string> {
 export const GET: APIRoute = async () => {
   const text = `# Kimün
 
-> Kimün (\`km\`) is a command-line tool that measures the health of a codebase: an overall grade from A++ to F--, static metrics (lines of code, duplication, cyclomatic and cognitive complexity, Halstead, maintainability index, code smells, dependencies), what git history tells (hotspots, churn, ownership, temporal coupling, file age) and the impact of a change before it is merged. Written in Rust, MIT licensed. The site kimun.tools is available in Spanish (root paths) and English (paths under /en/).
+> Kimün (\`km\`) is a command-line tool that measures the health of a codebase: an overall grade from A++ to F--, static metrics (lines of code, duplication, cyclomatic and cognitive complexity, Halstead, maintainability index, code smells, dependencies, a map of the code as nested circles), what git history tells (hotspots, churn, ownership, temporal coupling, file age) and the impact of a change before it is merged. Written in Rust, MIT licensed. The site kimun.tools is available in Spanish (root paths) and English (paths under /en/).
 
 The commands that measure take a path and answer for a machine with \`--format json\`. \`km ai skill claude\` installs a skill that teaches a coding agent to run \`km\` and read its output.
 

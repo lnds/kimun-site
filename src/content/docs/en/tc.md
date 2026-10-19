@@ -3,7 +3,7 @@ title: "km tc"
 description: "Temporal coupling analysis"
 ---
 
-Analyzes temporal coupling between files via git history. Based on Adam Thornhill's method ("Your Code as a Crime Scene" ch. 7): files that frequently change together in the same commits have implicit coupling, even without direct imports.
+Analyzes temporal coupling between files via git history. Based on Adam Tornhill's method ("Your Code as a Crime Scene" ch. 7): files that frequently change together in the same commits have implicit coupling, even without direct imports.
 
 ```bash
 km tc [path]

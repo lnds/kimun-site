@@ -3,7 +3,7 @@ title: "km knowledge"
 description: "Análisis de propiedad del código"
 ---
 
-Analiza los patrones de propiedad del código con git blame (mapas de conocimiento). Se basa en el método de Adam Thornhill ("Your Code as a Crime Scene", capítulos 8 y 9).
+Analiza los patrones de propiedad del código con git blame (mapas de conocimiento). Se basa en el método de Adam Tornhill ("Your Code as a Crime Scene", capítulos 8 y 9).
 
 ```bash
 km knowledge [path]
