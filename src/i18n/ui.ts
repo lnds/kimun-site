@@ -53,7 +53,7 @@ export const ui = {
       'De A++ a F--, calculada con cinco dimensiones: complejidad cognitiva, duplicación, indentación, esfuerzo de Halstead y tamaño de los archivos. Y la lista de archivos que conviene mirar primero.',
     'features.static.title': 'Un comando para cada medida',
     'features.static.body':
-      'Líneas de código en más de sesenta lenguajes, código duplicado, complejidad ciclomática y cognitiva, índice de mantenibilidad, code smells y dependencias entre archivos.',
+      'Líneas de código en más de sesenta lenguajes, código duplicado, complejidad ciclomática y cognitiva, índice de mantenibilidad, code smells, dependencias entre archivos y un mapa del código en círculos anidados.',
     'features.history.title': 'La historia, leída desde git',
     'features.history.body':
       'Hotspots: archivos complejos que cambian seguido. Mapa de conocimiento: quién domina cada archivo. Acoplamiento temporal: archivos que cambian siempre juntos, aunque el código no lo diga.',
@@ -85,6 +85,7 @@ export const ui = {
     'cmd.mi': 'Índice de mantenibilidad, en dos variantes (mi y miv)',
     'cmd.smells': 'Code smells: funciones largas, números mágicos, deuda pendiente',
     'cmd.deps': 'Dependencias entre archivos y sus ciclos',
+    'cmd.map': 'El código como círculos anidados, coloreados por una métrica',
     'cmd.report': 'Un informe con todas las métricas juntas',
     'cmd.hotspots': 'Archivos complejos que cambian seguido',
     'cmd.churn': 'Cuánto cambia cada archivo',
@@ -213,7 +214,7 @@ export const ui = {
       'From A++ to F--, out of five dimensions: cognitive complexity, duplication, indentation, Halstead effort and file size. Plus the list of files worth looking at first.',
     'features.static.title': 'A command for each measure',
     'features.static.body':
-      'Lines of code in more than sixty languages, duplicated code, cyclomatic and cognitive complexity, maintainability index, code smells and dependencies between files.',
+      'Lines of code in more than sixty languages, duplicated code, cyclomatic and cognitive complexity, maintainability index, code smells, dependencies between files and a map of the code as nested circles.',
     'features.history.title': 'The history, read from git',
     'features.history.body':
       'Hotspots: complex files that change often. Knowledge map: who owns each file. Temporal coupling: files that always change together, even when the code does not say so.',
@@ -245,6 +246,7 @@ export const ui = {
     'cmd.mi': 'Maintainability index, in two variants (mi and miv)',
     'cmd.smells': 'Code smells: long functions, magic numbers, pending debt',
     'cmd.deps': 'Dependencies between files and their cycles',
+    'cmd.map': 'The code as nested circles, coloured by a metric',
     'cmd.report': 'One report with every metric together',
     'cmd.hotspots': 'Complex files that change often',
     'cmd.churn': 'How much each file changes',

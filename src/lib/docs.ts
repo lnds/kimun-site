@@ -9,7 +9,7 @@ export const docGroups: { title: Key; slugs: string[] }[] = [
   { title: 'docs.group.guide', slugs: ['install', 'configuration'] },
   {
     title: 'commands.group.static',
-    slugs: ['score', 'loc', 'dups', 'cycom', 'cogcom', 'indent', 'hal', 'mi', 'miv', 'smells', 'deps', 'report'],
+    slugs: ['score', 'loc', 'dups', 'cycom', 'cogcom', 'indent', 'hal', 'mi', 'miv', 'smells', 'deps', 'map', 'report'],
   },
   {
     title: 'commands.group.git',

@@ -3,7 +3,7 @@ title: "km hotspots"
 description: "Hotspot analysis"
 ---
 
-Finds hotspots: files that change frequently AND have high complexity. Based on Adam Thornhill's method ("Your Code as a Crime Scene").
+Finds hotspots: files that change frequently AND have high complexity. Based on Adam Tornhill's method ("Your Code as a Crime Scene").
 
 ```bash
 km hotspots [path]
@@ -17,7 +17,7 @@ Score = Commits × Complexity
 
 Files with high scores concentrate risk — they are both change-prone and complex, making them the highest-value refactoring targets.
 
-By default, complexity is measured by **total indentation** (sum of logical indentation levels across all code lines), following Thornhill's original method from "Your Code as a Crime Scene". Use `--complexity cycom` for cyclomatic complexity instead.
+By default, complexity is measured by **total indentation** (sum of logical indentation levels across all code lines), following Tornhill's original method from "Your Code as a Crime Scene". Use `--complexity cycom` for cyclomatic complexity instead.
 
 Requires a git repository. Merge commits are excluded from the count.
 
@@ -30,7 +30,7 @@ Options:
 | `--top N` | Rows of the table (default: 20); JSON lists every file unless `--top` is given |
 | `--sort-by METRIC` | Sort by `score`, `commits`, or `complexity` (default: `score`) |
 | `--since DURATION` | Only consider commits since this time (e.g. `30d`, `6m`, `1y`) |
-| `--complexity METRIC` | `indent` (default, Thornhill) or `cycom` (cyclomatic) |
+| `--complexity METRIC` | `indent` (default, Tornhill) or `cycom` (cyclomatic) |
 
 Duration units: `d` (days), `m` (months, approx. 30 days), `y` (years, approx. 365 days).
 
@@ -48,7 +48,7 @@ Hotspots (Commits × Total Indent Complexity)
  src/report/mod.rs           Rust       4        998       3992
 ──────────────────────────────────────────────────────────────────────────────
 
-Score = Commits × Total Indentation (Thornhill method).
+Score = Commits × Total Indentation (Tornhill method).
 High-score files are change-prone and complex — prime refactoring targets.
 ```
 

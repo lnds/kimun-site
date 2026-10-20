@@ -7,8 +7,8 @@ Las métricas y metodologías implementadas en Kimün se basan en las siguientes
 
 ## Libros
 
-- **Adam Thornhill**, *Your Code as a Crime Scene* (Pragmatic Bookshelf, 2015). Base del análisis de hotspots (caps. 4–5), del acoplamiento temporal (cap. 7), de los mapas de conocimiento y la propiedad del código (caps. 8–9), y de la complejidad por indentación como indicador indirecto de la calidad del código.
-- **Adam Thornhill**, *Software Design X-Rays* (Pragmatic Bookshelf, 2018). Extiende la metáfora de la escena del crimen con más técnicas de análisis del comportamiento del código.
+- **Adam Tornhill**, *Your Code as a Crime Scene* (Pragmatic Bookshelf, 2015). Base del análisis de hotspots (caps. 4–5), del acoplamiento temporal (cap. 7), de los mapas de conocimiento y la propiedad del código (caps. 8–9), y de la complejidad por indentación como indicador indirecto de la calidad del código.
+- **Adam Tornhill**, *Software Design X-Rays* (Pragmatic Bookshelf, 2018). Extiende la metáfora de la escena del crimen con más técnicas de análisis del comportamiento del código.
 
 ## Artículos y estándares
 

@@ -3,7 +3,7 @@ title: "km tc"
 description: "Análisis de acoplamiento temporal"
 ---
 
-Analiza el acoplamiento temporal entre archivos a partir del historial de git. Se basa en el método de Adam Thornhill ("Your Code as a Crime Scene", cap. 7): los archivos que cambian juntos a menudo en los mismos commits tienen un acoplamiento implícito, aunque no se importen directamente.
+Analiza el acoplamiento temporal entre archivos a partir del historial de git. Se basa en el método de Adam Tornhill ("Your Code as a Crime Scene", cap. 7): los archivos que cambian juntos a menudo en los mismos commits tienen un acoplamiento implícito, aunque no se importen directamente.
 
 ```bash
 km tc [path]

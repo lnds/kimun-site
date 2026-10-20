@@ -3,7 +3,7 @@ title: "km knowledge"
 description: "Code ownership analysis"
 ---
 
-Analyzes code ownership patterns via git blame (knowledge maps). Based on Adam Thornhill's method ("Your Code as a Crime Scene" chapters 8-9).
+Analyzes code ownership patterns via git blame (knowledge maps). Based on Adam Tornhill's method ("Your Code as a Crime Scene" chapters 8-9).
 
 ```bash
 km knowledge [path]
