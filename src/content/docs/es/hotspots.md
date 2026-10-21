@@ -17,7 +17,7 @@ Score = Commits × Complexity
 
 Los archivos con puntaje alto concentran el riesgo: cambian mucho y son complejos, así que son los candidatos más valiosos para refactorizar.
 
-Por defecto, la complejidad se mide con la **indentación total** (la suma de los niveles lógicos de indentación de todas las líneas de código), siguiendo el método original de Tornhill en "Your Code as a Crime Scene". Usa `--complexity cycom` para medirla con la complejidad ciclomática.
+Por defecto, la complejidad se mide con la **indentación total** (la suma de los niveles lógicos de indentación de todas las líneas de código), siguiendo el método original de Tornhill en "Your Code as a Crime Scene". Usa `--complexity cycom` para medirla con la complejidad ciclomática, o `--complexity cogcom` para la cognitiva. Los documentos (`--kind docs`) se miden por sus líneas de texto sea cual sea la métrica, porque la indentación y las ramas no dicen nada de la prosa: `km hotspots --kind docs` encuentra los documentos largos que más se reescriben, como un archivo de instrucciones para agentes que crece cada semana. La infraestructura conserva la métrica pedida, porque la indentación de YAML y HCL es su estructura.
 
 Requiere un repositorio git. Los commits de merge se excluyen de la cuenta.
 
@@ -30,7 +30,7 @@ Opciones:
 | `--top N` | Filas de la tabla (por defecto: 20); el JSON lista todos los archivos salvo que se indique `--top` |
 | `--sort-by METRIC` | Ordena por `score`, `commits` o `complexity` (por defecto: `score`) |
 | `--since DURATION` | Considera solo los commits desde este momento (p. ej. `30d`, `6m`, `1y`) |
-| `--complexity METRIC` | `indent` (por defecto, Tornhill) o `cycom` (ciclomática) |
+| `--complexity METRIC` | `indent` (por defecto, Tornhill), `cycom` (ciclomática) o `cogcom` (cognitiva); los documentos se miden por líneas |
 
 Unidades de duración: `d` (días), `m` (meses, aprox. 30 días), `y` (años, aprox. 365 días).
 

@@ -64,6 +64,7 @@ A **project** is a directory with a manifest. A project **depends** on another w
 | Elixir | `mix.exs` | `path:` dependencies and `in_umbrella: true` |
 | Go | `go.mod`, `go.work` | required modules that are another module of the repository, and `replace` with a directory |
 | Python | `pyproject.toml` | any requirement whose name is another project of the repository (whatever the case, and whichever of `-`, `_`, `.`), and those given a `path` in `[tool.uv.sources]` or in the tables of Poetry; read from `[project]` (`dependencies`, `optional-dependencies`), `[dependency-groups]`, `[build-system] requires`, `[tool.poetry]` and the development groups of uv and PDM |
+| Terraform | any `.tf` file: a module is a directory of them, named after it | `module` blocks whose `source` is a local path (`./`, `../`); registry, git and other remote sources are external. A change to a shared module reaches the modules and the stacks or environments that call it |
 
 ```
 Blast radius — projects reached through their manifests
@@ -92,7 +93,7 @@ Changed files outside every project (reach unknown): Makefile
 
 - **`--affected`** prints the projects whose builds and tests the diff calls for, one per line, and nothing else: the changed and the reached ones. If any changed file is outside every project, it prints **all** projects and says why on stderr — skipping a test suite is worse than running one too many. It reads only the diff and the manifests, not the history.
 - A repository with a single project gets a line saying this level does not apply, rather than "0 reached".
-- `node_modules`, `vendor` and `testdata` are never searched for manifests, nor are `deps`, `_build` and `target` (unless they sit under `src`, `lib` or `app`, where they are part of the project), nor is a `fixtures` directory inside a test directory. An end-to-end suite with its own manifest (`test/e2e/package.json`) is a project.
+- `node_modules`, `vendor`, `testdata` and `.terraform` are never searched for manifests, nor are `deps`, `_build` and `target` (unless they sit under `src`, `lib` or `app`, where they are part of the project), nor is a `fixtures` directory inside a test directory. An end-to-end suite with its own manifest (`test/e2e/package.json`) is a project.
 
 Limits:
 

@@ -1,9 +1,9 @@
 ---
 title: "km docs"
-description: "Dead references and documents behind the code"
+description: "Dead references, the graph of notes, agent context and documents behind the code"
 ---
 
-Measures of documentation: the Markdown files of the repository, whatever `--kind` says. `km docs refs` finds the references that lead nowhere; `km docs stale` the documents behind the code they describe. For a change not yet merged, [`km impact`](/en/docs/impact#documentation-left-behind) lists the documents it leaves behind.
+Measures of documentation: the Markdown files of the repository, whatever `--kind` says. `km docs refs` finds the references that lead nowhere; `km docs links` reads the links between notes as a graph; `km docs context` measures the files that steer coding agents; `km docs stale` finds the documents behind the code they describe. For a change not yet merged, [`km impact`](/en/docs/impact#documentation-left-behind) lists the documents it leaves behind.
 
 ## `km docs refs`
 
@@ -46,6 +46,69 @@ Example output:
 ```
 
 The JSON lists `documents`, `references` and every dead reference with its `document`, `line`, `reference`, `form` (`link`, `image` or `code`) and `missing` (`file`, `heading` or `path`). `km ai` offers the command to an LLM as the tool `km_docs_refs`.
+
+## `km docs links` -- The graph of notes
+
+A knowledge base, a docs site or a second brain is a graph of notes, and its health is a property of that graph: notes nothing links to, links that lead nowhere, a few notes everything depends on, groups of notes cut off from the rest. `km docs links` reads the links between Markdown documents and reports them.
+
+```bash
+km docs links [path]
+km docs links kb/ --top 50
+km deps --kind docs --matrix   # the same graph with the dependency tools
+```
+
+| Link | Leads to |
+|------|----------|
+| `[text](path.md)` | the document at that path, from the linking one (from the walked directory for a path starting with `/`) |
+| `[[Note]]`, `[[kb/Note\|text]]`, `![[Note]]` | a wikilink, as Obsidian, Foam and Logseq resolve it: by path from the root, else by note name, without case or extension; of several notes of that name, the nearest |
+
+URLs and anchors alone link to no note, and a link to a file that is no document is no edge. An absolute link without extension is a route of a site.
+
+| Reported | What |
+|----------|------|
+| Broken links | no file has the path, no note the name |
+| Orphans | notes no note links to, besides entry points: README, index, SUMMARY, CLAUDE, AGENTS, CHANGELOG, CONTRIBUTING and the like |
+| Hubs | the notes most linked to |
+| Islands | groups of notes linked among themselves and to no other group, besides the largest |
+
+With `--kind docs`, `km deps` builds the same graph: fan-in and fan-out of each note, cycles, `--matrix` and its HTML page, and broken links as unresolved imports. Without `--kind`, documents stay out of the dependency graph as before.
+
+| Flag | Description |
+|------|-------------|
+| `--top N` | Rows of each table (default: 20); JSON lists every entry unless given |
+| `--format {table,json,short,terse}` | Output format (default: table). `terse` prints the number of broken links |
+
+## `km docs context` -- Files that steer coding agents
+
+`CLAUDE.md`, `AGENTS.md`, rules of Cursor and Copilot, skills, agent and command definitions are loaded into the model's context. They grow, they repeat each other and their rules pile up, while models use long contexts worse, and worst what sits in the middle (Liu et al., *Lost in the Middle*, TACL 2024). `km docs context` measures them. No model is called.
+
+```bash
+km docs context [path]
+km docs context --max-tokens 8000   # in CI
+```
+
+| Role | Files |
+|------|-------|
+| `instructions` | `CLAUDE.md`, `CLAUDE.local.md`, `AGENTS.md`, `GEMINI.md`, read for every task under their directory |
+| `rules` | `.cursorrules`, `.cursor/rules/`, `.windsurfrules`, `.github/copilot-instructions.md`, `.github/instructions/` |
+| `skill`, `agent`, `command` | `.claude/skills/` (and any `SKILL.md`), `.claude/agents/`, `.claude/commands/` |
+
+| Measure | What |
+|---------|------|
+| Tokens | approximate: characters / 4 |
+| Loads | what an agent working in a directory reads together: the instructions of its family (`claude`, `agents`, `gemini`) from the analyzed directory down to it, so a deep directory shows its real budget |
+| Rules | lines of prose that ask (`must`, `never`, `always`, `do not`, `should`, `debe`, `nunca`, `siempre`, …): a rough measure of how much is asked |
+| Repeated | lines of prose found in more than one context file; a link such as `AGENTS.md → CLAUDE.md` repeats nothing |
+| Dead | the references [`km docs refs`](/en/docs/docs#km-docs-refs) finds dead |
+| Commits, Changed | how often each file changed and when last, in a git repository |
+
+`--max-tokens N` exits with code 1 when a load goes over N tokens. Files ignored by git are not read, and `.claude/` often is; `--kind` does not apply, the exclude flags do.
+
+| Flag | Description |
+|------|-------------|
+| `--max-tokens N` | Exit with code 1 when a load goes over N tokens |
+| `--top N` | Rows of each table (default: 20); JSON lists every entry |
+| `--format {table,json,short,terse}` | Output format (default: table). `terse` prints the tokens of the largest load |
 
 ## `km docs stale`
 

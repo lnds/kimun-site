@@ -64,6 +64,7 @@ Un **proyecto** es un directorio con un manifiesto. Un proyecto **depende** de o
 | Elixir | `mix.exs` | dependencias con `path:` e `in_umbrella: true` |
 | Go | `go.mod`, `go.work` | módulos requeridos que son otro módulo del repositorio, y `replace` con un directorio |
 | Python | `pyproject.toml` | cualquier requisito cuyo nombre sea otro proyecto del repositorio (sin distinguir mayúsculas ni `-`, `_`, `.`), y los que tienen un `path` en `[tool.uv.sources]` o en las tablas de Poetry; se leen `[project]` (`dependencies`, `optional-dependencies`), `[dependency-groups]`, `[build-system] requires`, `[tool.poetry]` y los grupos de desarrollo de uv y PDM |
+| Terraform | cualquier archivo `.tf`: un módulo es un directorio de ellos, con el nombre del directorio | bloques `module` cuyo `source` es una ruta local (`./`, `../`); las fuentes del registro, de git y otras remotas son externas. Un cambio en un módulo compartido alcanza los módulos y los stacks o ambientes que lo llaman |
 
 ```
 Blast radius — projects reached through their manifests
@@ -92,7 +93,7 @@ Changed files outside every project (reach unknown): Makefile
 
 - **`--affected`** imprime los proyectos cuyas compilaciones y tests pide el diff, uno por línea, y nada más: los que cambiaron y los alcanzados. Si algún archivo modificado está fuera de todo proyecto, imprime **todos** los proyectos y explica por qué en stderr: saltarse una suite de tests es peor que ejecutar una de más. Lee solo el diff y los manifiestos, no el historial.
 - Un repositorio con un solo proyecto recibe una línea que dice que este nivel no aplica, en vez de "0 reached".
-- En `node_modules`, `vendor` y `testdata` nunca se buscan manifiestos, ni en `deps`, `_build` y `target` (salvo que estén bajo `src`, `lib` o `app`, donde son parte del proyecto), ni tampoco en un directorio `fixtures` dentro de un directorio de tests. Una suite de extremo a extremo con su propio manifiesto (`test/e2e/package.json`) es un proyecto.
+- En `node_modules`, `vendor`, `testdata` y `.terraform` nunca se buscan manifiestos, ni en `deps`, `_build` y `target` (salvo que estén bajo `src`, `lib` o `app`, donde son parte del proyecto), ni tampoco en un directorio `fixtures` dentro de un directorio de tests. Una suite de extremo a extremo con su propio manifiesto (`test/e2e/package.json`) es un proyecto.
 
 Límites:
 

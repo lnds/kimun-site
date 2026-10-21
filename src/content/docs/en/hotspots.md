@@ -17,7 +17,7 @@ Score = Commits × Complexity
 
 Files with high scores concentrate risk — they are both change-prone and complex, making them the highest-value refactoring targets.
 
-By default, complexity is measured by **total indentation** (sum of logical indentation levels across all code lines), following Tornhill's original method from "Your Code as a Crime Scene". Use `--complexity cycom` for cyclomatic complexity instead.
+By default, complexity is measured by **total indentation** (sum of logical indentation levels across all code lines), following Tornhill's original method from "Your Code as a Crime Scene". Use `--complexity cycom` for cyclomatic complexity instead, or `--complexity cogcom` for cognitive complexity. Documents (`--kind docs`) are measured by their lines of text whatever the metric, since indentation and branches say nothing about prose: `km hotspots --kind docs` finds the long documents rewritten most often, such as an agent instruction file that grows every week. Infrastructure keeps the metric asked for, as the indentation of YAML and HCL is its structure.
 
 Requires a git repository. Merge commits are excluded from the count.
 
@@ -30,7 +30,7 @@ Options:
 | `--top N` | Rows of the table (default: 20); JSON lists every file unless `--top` is given |
 | `--sort-by METRIC` | Sort by `score`, `commits`, or `complexity` (default: `score`) |
 | `--since DURATION` | Only consider commits since this time (e.g. `30d`, `6m`, `1y`) |
-| `--complexity METRIC` | `indent` (default, Tornhill) or `cycom` (cyclomatic) |
+| `--complexity METRIC` | `indent` (default, Tornhill), `cycom` (cyclomatic) or `cogcom` (cognitive); documents are measured by lines |
 
 Duration units: `d` (days), `m` (months, approx. 30 days), `y` (years, approx. 365 days).
 

@@ -37,6 +37,7 @@ Options:
 | `--min-shared N` | Minimum commits two files must share to be a pair (default: 3) |
 | `--max-changeset N` | Ignore commits touching more than N files as evidence of coupling (default: 30) |
 | `--min-strength F` | Minimum coupling strength to show (e.g. `0.5` for strong only) |
+| `--across` | Only pairs of files of different kinds: code with documentation, code with infrastructure. Reads every kind but data unless `--kind` says which |
 | `--include-ext`, `--exclude-ext`, `--exclude-dir`, `--exclude` | Path filters, applied to the paths of history |
 
 Only files that still exist in the working tree are paired, and only code: lock files, manifests, CI YAML and documentation are left out. A sweeping commit (more than `--max-changeset` files) relates files by accident and is skipped, as is a revert together with the commit it reverts (a message opening with `Revert "` that names the commit): together they changed nothing. Renames are not followed: a file is paired under the path it has now.
