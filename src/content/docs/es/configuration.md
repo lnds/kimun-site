@@ -57,6 +57,9 @@ llm_risk     = 70  # bajo este puntaje es un riesgo para LLM (por defecto: 70)
 [impact]
 inert = ["scripts/**"]  # changed files that reach nothing, besides documentation
 entry_points = ["**/endpoint.ex"]  # files run rather than used, besides tasks and scripts
+[docs]
+covers = { "apps/payments/**" = "kb/payments/**", "lib/billing/**" = ["kb/billing.md"] }  # code and the documents that describe it
+ignore = ["docs/adr/**"]  # documents that never need to follow the code
 
 [exclude]
 dirs       = ["vendor", "third_party"]  # directory names, at any depth (as --exclude-dir)
@@ -65,5 +68,14 @@ patterns   = ["legacy/**", "*.min.js"]  # globs from the analyzed directory (as 
 ```
 
 `[exclude]` deja fuera de todos los comandos archivos y directorios, además de lo que ya deja `.gitignore`. A diferencia de los demás valores, no cede ante los flags: se suma a `--exclude-dir`, `--exclude-ext` y `--exclude`, y `--list-excluded` muestra lo que deja fuera. Los patrones se comparan con la ruta relativa al directorio analizado, como `--exclude`.
+
+`[kinds]` declara el [tipo](/docs/dups#tipos-de-archivo) de archivos por glob, contra la ruta relativa al directorio analizado, antes de lo que digan su lenguaje y su ruta. Con `separate = true`, la infraestructura deja de medirse como código salvo que `--kind` lo pida.
+
+```toml
+[kinds]
+separate = false              # true: Terraform y los Dockerfiles no se miden como código (por defecto: false)
+docs     = ["notes/**"]       # estos archivos son docs, sea cual sea su extensión
+infra    = ["deploy/**/*.yml"]
+```
 
 Todas las secciones y todos los campos son opcionales: omite los que no necesites. Hay una plantilla completamente documentada en [`.kimun.toml.example`](https://github.com/lnds/kimun/blob/main/.kimun.toml.example).

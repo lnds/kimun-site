@@ -106,3 +106,16 @@ Los comandos que miden código (`dups`, `indent`, `hal`, `cycom`, `cogcom`, `mi`
 - **Datos y prosa**: JSON, YAML, TOML, XML, Markdown, Text, Properties y archivos PO. Su indentación es estructura, no anidamiento, y cambian en cada versión sin ser código.
 
 `km knowledge` y `km authors` dejan fuera los archivos generados. `km loc` y `km deps` leen todos los archivos: las líneas son líneas, y el código generado igual se importa.
+
+## Tipos de archivo
+
+Cada archivo es de un tipo:
+
+| Tipo | Archivos |
+|------|----------|
+| `code` | Código fuente |
+| `docs` | Markdown, reStructuredText y texto plano |
+| `infra` | Terraform, Dockerfiles, y el YAML que es infraestructura: workflows de GitHub, `.gitlab-ci.yml` y otros pipelines de CI, archivos de Compose, charts de Helm, Kustomize, Ansible (`playbooks/`, `roles/*/tasks/`, …), manifiestos de Kubernetes (`apiVersion` y `kind`), plantillas de CloudFormation |
+| `data` | JSON, TOML, XML, el resto del YAML, Properties y archivos PO |
+
+`--kind` elige los tipos que lee un comando, en todos los comandos que leen archivos: `--kind docs`, `--kind code,infra`, `--kind all`. Sin él nada cambia: cada comando lee lo que siempre ha leído, y la infraestructura escrita en un lenguaje de código (Terraform, Dockerfiles) se mide como código. Para medir solo código, usa `--kind code`, o pon `separate = true` bajo `[kinds]` en `.kimun.toml` para que sea lo habitual; `[kinds]` también puede declarar el tipo de archivos por glob. `--list-excluded` nombra los archivos que `--kind` deja fuera. [`km docs refs`](/docs/docs#km-docs-refs) lee los documentos, diga lo que diga `--kind`.

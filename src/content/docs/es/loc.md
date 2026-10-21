@@ -19,7 +19,7 @@ Ejecútalo en una ruta específica:
 km loc src/
 ```
 
-Los archivos de tests quedan fuera por defecto, así que los totales son menores que los de `cloc` sobre el mismo directorio. Con `--include-tests` ambos cuentan los mismos archivos.
+Los archivos de tests quedan fuera por defecto, así que los totales son menores que los de `cloc` sobre el mismo directorio. Con `--include-tests` ambos cuentan los mismos archivos. Bajo la tabla, cuando hay más de uno, van las líneas de cada [tipo de archivo](/docs/dups#tipos-de-archivo): code, docs, infra y data (`kinds` en el JSON).
 
 Opciones:
 

@@ -19,7 +19,7 @@ Run on a specific path:
 km loc src/
 ```
 
-Test files are left out by default, so the totals are lower than those of `cloc` on the same directory. With `--include-tests` both count the same files.
+Test files are left out by default, so the totals are lower than those of `cloc` on the same directory. With `--include-tests` both count the same files. Below the table, when there is more than one, come the lines of each [kind of file](/en/docs/dups#file-kinds): code, docs, infra and data (`kinds` in the JSON).
 
 Options:
 
