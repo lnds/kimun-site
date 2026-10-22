@@ -37,6 +37,7 @@ Opciones:
 | `--min-shared N` | Mínimo de commits que dos archivos deben compartir para formar un par (por defecto: 3) |
 | `--max-changeset N` | Ignora como evidencia de acoplamiento los commits que tocan más de N archivos (por defecto: 30) |
 | `--min-strength F` | Fuerza mínima de acoplamiento que se muestra (p. ej. `0.5` para ver solo el fuerte) |
+| `--across` | Solo pares de archivos de tipos distintos: código con documentación, código con infraestructura. Lee todos los tipos salvo datos, a menos que `--kind` diga cuáles |
 | `--include-ext`, `--exclude-ext`, `--exclude-dir`, `--exclude` | Filtros de ruta, aplicados a las rutas del historial |
 
 Solo se emparejan archivos que todavía existen en el árbol de trabajo, y solo código: los archivos lock, los manifiestos, el YAML de CI y la documentación quedan fuera. Un commit masivo (más de `--max-changeset` archivos) relaciona archivos por accidente y se omite, igual que un revert junto con el commit que revierte (un mensaje que empieza con `Revert "` y nombra el commit): juntos no cambiaron nada. Los renombres no se siguen: un archivo se empareja con la ruta que tiene hoy.
