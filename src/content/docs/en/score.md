@@ -78,6 +78,7 @@ Options:
 | `--gate-tolerance POINTS` | Score drop `--fail-if-worse` allows before failing (default: `0.01` with `--gate-scope project`, `0.5` with `--gate-scope changed`). Compares unrounded scores |
 | `--gate-scope {project,changed}` | What `--fail-if-worse` compares (default: `project`, the aggregate score). `changed` looks only at the files the diff touches: it fails if a modified or renamed file ends below the project score at the ref after dropping more than `--gate-tolerance`, or if the project's duplicated lines grow. Files above the project score, new files and deleted files never fail it, so removing healthy code cannot lower the verdict. The report lists every changed file with its before/after score |
 | `--fail-below GRADE` | With `--trend`: exit with code 1 if the score is below `GRADE` (e.g. `B-`). Overridable via `.kimun.toml` |
+| `--badge FILE` | Write a badge of the score: an SVG, or the JSON of a shields.io endpoint badge when `FILE` ends in `.json` (see [Badge](/en/docs/score#badge)) |
 | `--format {table,json,short,terse}` | Output format (default: table) |
 | `--include-tests` | Include tests, examples and benchmarks in analysis (excluded by default) |
 | `--bottom N` | Number of worst files to show in "needs attention" (default: 10) |
@@ -117,6 +118,20 @@ Code Health Score
   77.3  B-     ./src/walk.rs              Cognitive: 16
 ──────────────────────────────────────────────────────────────────
 ```
+
+## Badge
+
+`--badge FILE` writes a badge of the score for a README, besides the report: a self-contained SVG in the flat style of shields.io, coloured by the letter of the grade (A green, B light green, C yellow, D orange, F red), or, when `FILE` ends in `.json`, the JSON of a [shields.io endpoint badge](https://shields.io/badges/endpoint-badge).
+
+```bash
+km score --badge .github/km-score.svg
+```
+
+```markdown
+[![km score](.github/km-score.svg)](https://kimun.tools)
+```
+
+A badge in the repository is as fresh as its last run, and a workflow cannot commit to a protected branch. To keep it current, [kimun-action](https://github.com/lnds/kimun-action) does it in GitHub Actions: it installs `km`, writes both forms of the badge, and with `actions/deploy-pages` publishes them on GitHub Pages on every push. The README then points at `https://OWNER.github.io/REPO/km-score.svg`, or at `https://img.shields.io/endpoint?url=https://OWNER.github.io/REPO/km-score.json`. Its README has the whole workflow.
 
 ## `km score diff` — Compare score against a git ref
 

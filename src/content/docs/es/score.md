@@ -78,6 +78,7 @@ Opciones:
 | `--gate-tolerance POINTS` | Caída de puntaje que `--fail-if-worse` permite antes de fallar (por defecto: `0.01` con `--gate-scope project`, `0.5` con `--gate-scope changed`). Compara los puntajes sin redondear |
 | `--gate-scope {project,changed}` | Qué compara `--fail-if-worse` (por defecto: `project`, el puntaje agregado). `changed` mira solo los archivos que toca el diff: falla si un archivo modificado o renombrado termina por debajo del puntaje que el proyecto tenía en la ref después de bajar más que `--gate-tolerance`, o si crecen las líneas duplicadas del proyecto. Los archivos por encima del puntaje del proyecto, los archivos nuevos y los eliminados nunca la hacen fallar, así que quitar código sano no puede empeorar el veredicto. El informe lista cada archivo modificado con su puntaje de antes y de después |
 | `--fail-below GRADE` | Con `--trend`: termina con código 1 si la nota está por debajo de `GRADE` (p. ej. `B-`). Se puede sobrescribir en `.kimun.toml` |
+| `--badge ARCHIVO` | Escribe un badge del puntaje: un SVG, o el JSON de un badge endpoint de shields.io cuando `ARCHIVO` termina en `.json` (mira [Badge](/docs/score#badge)) |
 | `--format {table,json,short,terse}` | Formato de salida (por defecto: table) |
 | `--include-tests` | Incluye los tests, ejemplos y benchmarks en el análisis (excluidos por defecto) |
 | `--bottom N` | Cantidad de peores archivos que se muestran en "needs attention" (por defecto: 10) |
@@ -117,6 +118,20 @@ Code Health Score
   77.3  B-     ./src/walk.rs              Cognitive: 16
 ──────────────────────────────────────────────────────────────────
 ```
+
+## Badge
+
+`--badge ARCHIVO` escribe un badge del puntaje para un README, además del informe: un SVG autocontenido con el estilo plano de shields.io, coloreado según la letra de la nota (A verde, B verde claro, C amarillo, D naranja, F rojo), o, cuando `ARCHIVO` termina en `.json`, el JSON de un [badge endpoint de shields.io](https://shields.io/badges/endpoint-badge).
+
+```bash
+km score --badge .github/km-score.svg
+```
+
+```markdown
+[![km score](.github/km-score.svg)](https://kimun.tools)
+```
+
+Un badge guardado en el repositorio está tan al día como su última ejecución, y un workflow no puede hacer commit en una rama protegida. Para mantenerlo vigente, [kimun-action](https://github.com/lnds/kimun-action) lo hace en GitHub Actions: instala `km`, escribe las dos formas del badge y, con `actions/deploy-pages`, las publica en GitHub Pages en cada push. El README apunta entonces a `https://OWNER.github.io/REPO/km-score.svg`, o a `https://img.shields.io/endpoint?url=https://OWNER.github.io/REPO/km-score.json`. Su README tiene el workflow completo.
 
 ## `km score diff` -- Comparar el puntaje con una ref de git
 
