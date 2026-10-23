@@ -3,6 +3,7 @@ import { render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import { t, pathInLang, type Lang } from '../i18n/ui';
 import { formatDate, type Post } from '../lib/blog';
+import ShareLinks from './ShareLinks.astro';
 
 interface Props {
   lang: Lang;
@@ -30,6 +31,7 @@ const { title, description, date } = post.data;
         <div class="rich-prose">
           <Content />
         </div>
+        <ShareLinks lang={lang} title={title} />
         <p class="back">
           <a href={pathInLang('/blog/', lang)}>← {tt('blog.back')}</a>
         </p>
