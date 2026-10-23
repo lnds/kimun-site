@@ -12,10 +12,10 @@ interface Props {
 const { lang, post } = Astro.props;
 const tt = t(lang);
 const { Content } = await render(post);
-const { title, description, date } = post.data;
+const { title, description, date, image } = post.data;
 ---
 
-<Base lang={lang} title={`${title} · Kimün`} description={description}>
+<Base lang={lang} title={`${title} · Kimün`} description={description} image={image} type="article">
   <div class="page backdrop">
     <div class="container">
       <article>

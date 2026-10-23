@@ -2,6 +2,7 @@
 title: "¿Tu código es amistoso para un LLM?"
 description: "km map --color-by llm marca en rojo el código donde un agente debería sufrir. Lo pusimos a prueba con 47 errores: en código que el modelo ya conocía, el rojo casi no importó; en código nuevo para él, le costó un tercio más."
 date: 2026-10-23
+image: /blog/is-your-code-llm-friendly/card-es.png
 ---
 
 `km map --color-by llm` pinta cada archivo según su nota de salud y marca dónde un agente de código trabajará tranquilo y dónde conviene vigilarlo. La idea viene de CodeScene[^codescene], que sostiene que los agentes son confiables sobre código con un Code Health de 9,5 o más.

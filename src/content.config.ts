@@ -17,6 +17,8 @@ const blog = defineCollection({
     title: z.string(),
     description: z.string(),
     date: z.coerce.date(),
+    // The social card, a 1200×630 image under public/; the site's card when absent.
+    image: z.string().optional(),
   }),
 });
 
