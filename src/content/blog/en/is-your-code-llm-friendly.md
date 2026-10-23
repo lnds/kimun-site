@@ -2,6 +2,7 @@
 title: "Is Your Code LLM-Friendly?"
 description: "km map --color-by llm paints red the code where an agent should struggle. We tested it with 47 bugs. On code the model already knew, red barely mattered. On code it had never seen, red cost a third more."
 date: 2026-10-23
+image: /blog/is-your-code-llm-friendly/card-en.png
 ---
 
 `km map --color-by llm` colors every file by its health score and shows you where a coding agent can work unsupervised and where you'd better keep an eye on it. The idea comes from CodeScene[^codescene], which argues that agents are reliable on code with a Code Health of 9.5 or higher.
