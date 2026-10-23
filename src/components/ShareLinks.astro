@@ -29,7 +29,7 @@ const networks = [
   <ul>
     {
       networks.map((n) => (
-        <li>
+        <li data-share-network>
           <a href={n.href} target="_blank" rel="noopener noreferrer">
             {n.name}
           </a>
@@ -42,7 +42,9 @@ const networks = [
       </button>
     </li>
     <li hidden data-share-native-item>
-      <button type="button" data-share-native>{tt('blog.share.more')}</button>
+      <button type="button" data-share-native data-phone={tt('blog.share.native')}>
+        {tt('blog.share.more')}
+      </button>
     </li>
   </ul>
 </section>
@@ -110,21 +112,21 @@ const networks = [
       });
     }
 
-    // A new tab keeps the post open on a desktop, but on a phone it stops the
-    // link from opening the network's app (iOS universal links), so there the
-    // links open in place.
-    if (matchMedia('(pointer: coarse)').matches) {
-      box.querySelectorAll('a[target]').forEach((a) => a.removeAttribute('target'));
-    }
-
-    // The system's own share sheet, where the browser offers one (phones, mostly).
+    // The system's share sheet, where the browser offers one. On a phone it
+    // replaces the network links: those open the network's web page, which asks
+    // the reader to log in, while the sheet hands the post to the app itself.
     const item = box.querySelector<HTMLElement>('[data-share-native-item]');
     const native = box.querySelector<HTMLButtonElement>('[data-share-native]');
     if (item && native && typeof navigator.share === 'function') {
       item.hidden = false;
       native.addEventListener('click', () => {
-        navigator.share({ title, url }).catch(() => {});
+        navigator.share({ title, text: title, url }).catch(() => {});
       });
+      if (matchMedia('(pointer: coarse)').matches) {
+        box.querySelectorAll<HTMLElement>('[data-share-network]').forEach((li) => (li.hidden = true));
+        native.textContent = native.dataset.phone ?? native.textContent;
+        item.parentElement?.prepend(item);
+      }
     }
   });
 </script>
