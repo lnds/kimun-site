@@ -153,6 +153,7 @@ export const ui = {
     'blog.share.copy': 'Copiar enlace',
     'blog.share.copied': 'Enlace copiado',
     'blog.share.more': 'Más…',
+    'blog.share.native': 'Compartir…',
 
     'about.eyebrow': 'El nombre',
     'about.title': 'Kimün y Madu',
@@ -319,6 +320,7 @@ export const ui = {
     'blog.share.copy': 'Copy link',
     'blog.share.copied': 'Link copied',
     'blog.share.more': 'More…',
+    'blog.share.native': 'Share…',
 
     'about.eyebrow': 'The name',
     'about.title': 'Kimün and Madu',
