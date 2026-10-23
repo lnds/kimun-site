@@ -26,7 +26,6 @@ const { title, description, date } = post.data;
           </p>
           <h1>{title}</h1>
           <p class="lead">{description}</p>
-          <p class="byline">{tt('blog.by')}</p>
         </header>
         <div class="rich-prose">
           <Content />
@@ -57,11 +56,6 @@ const { title, description, date } = post.data;
     letter-spacing: -0.035em;
     line-height: 1.1;
     margin-bottom: var(--space-4);
-  }
-  .byline {
-    margin-top: var(--space-4);
-    font-size: 0.92rem;
-    color: var(--fg-subtle);
   }
   .rich-prose {
     font-size: 1.06rem;
