@@ -1,0 +1,123 @@
+---
+import { t, type Lang } from '../i18n/ui';
+import { SITE_URL } from '../../site.config.mjs';
+
+interface Props {
+  lang: Lang;
+  title: string;
+}
+const { lang, title } = Astro.props;
+const tt = t(lang);
+const url = new URL(Astro.url.pathname, SITE_URL).href;
+const u = encodeURIComponent(url);
+const text = encodeURIComponent(title);
+const both = encodeURIComponent(`${title} ${url}`);
+
+// Plain links: no script or tracker from the networks loads on the page.
+const networks = [
+  { name: 'X', href: `https://x.com/intent/post?text=${text}&url=${u}` },
+  { name: 'LinkedIn', href: `https://www.linkedin.com/sharing/share-offsite/?url=${u}` },
+  { name: 'Bluesky', href: `https://bsky.app/intent/compose?text=${both}` },
+  { name: 'Hacker News', href: `https://news.ycombinator.com/submitlink?u=${u}&t=${text}` },
+  { name: 'Reddit', href: `https://www.reddit.com/submit?url=${u}&title=${text}` },
+  { name: 'WhatsApp', href: `https://wa.me/?text=${both}` },
+];
+---
+
+<section class="share" data-share data-url={url} data-title={title} aria-label={tt('blog.share')}>
+  <p class="label">{tt('blog.share')}</p>
+  <ul>
+    {
+      networks.map((n) => (
+        <li>
+          <a href={n.href} target="_blank" rel="noopener noreferrer">
+            {n.name}
+          </a>
+        </li>
+      ))
+    }
+    <li>
+      <button type="button" data-share-copy data-copied={tt('blog.share.copied')}>
+        {tt('blog.share.copy')}
+      </button>
+    </li>
+    <li hidden data-share-native-item>
+      <button type="button" data-share-native>{tt('blog.share.more')}</button>
+    </li>
+  </ul>
+</section>
+
+<style>
+  .share {
+    margin-top: var(--space-12);
+  }
+  .label {
+    margin-bottom: var(--space-3);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-subtle);
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  a,
+  button {
+    display: inline-block;
+    padding: 0.45rem 0.85rem;
+    font: 600 0.85rem var(--font-sans);
+    color: var(--fg);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  a:hover,
+  button:hover {
+    border-color: var(--accent-soft);
+    color: var(--accent-soft);
+  }
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--accent-soft);
+    outline-offset: 2px;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-share]').forEach((box) => {
+    const url = box.dataset.url ?? location.href;
+    const title = box.dataset.title ?? document.title;
+
+    const copy = box.querySelector<HTMLButtonElement>('[data-share-copy]');
+    if (copy) {
+      const idle = copy.textContent;
+      copy.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(url);
+          copy.textContent = copy.dataset.copied ?? idle;
+          setTimeout(() => (copy.textContent = idle), 1600);
+        } catch (e) {
+          /* clipboard blocked: the address bar still has the link */
+        }
+      });
+    }
+
+    // The system's own share sheet, where the browser offers one (phones, mostly).
+    const item = box.querySelector<HTMLElement>('[data-share-native-item]');
+    const native = box.querySelector<HTMLButtonElement>('[data-share-native]');
+    if (item && native && typeof navigator.share === 'function') {
+      item.hidden = false;
+      native.addEventListener('click', () => {
+        navigator.share({ title, url }).catch(() => {});
+      });
+    }
+  });
+</script>

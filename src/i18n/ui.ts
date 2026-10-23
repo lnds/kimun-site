@@ -150,6 +150,10 @@ export const ui = {
     'blog.by': 'Por Eduardo Díaz',
     'blog.back': 'Todas las notas',
     'blog.feed': 'Blog de Kimün (RSS)',
+    'blog.share': 'Comparte esta nota',
+    'blog.share.copy': 'Copiar enlace',
+    'blog.share.copied': 'Enlace copiado',
+    'blog.share.more': 'Más…',
 
     'about.eyebrow': 'El nombre',
     'about.title': 'Kimün y Madu',
@@ -313,6 +317,10 @@ export const ui = {
     'blog.by': 'By Eduardo Díaz',
     'blog.back': 'All posts',
     'blog.feed': 'The Kimün blog (RSS)',
+    'blog.share': 'Share this post',
+    'blog.share.copy': 'Copy link',
+    'blog.share.copied': 'Link copied',
+    'blog.share.more': 'More…',
 
     'about.eyebrow': 'The name',
     'about.title': 'Kimün and Madu',
