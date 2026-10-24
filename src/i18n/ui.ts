@@ -147,6 +147,7 @@ export const ui = {
     'blog.title': 'Blog de Kimün',
     'blog.lead':
       'Notas sobre cómo medir el código, las ideas detrás de cada métrica y lo que va cambiando en km.',
+    'blog.by': 'Por',
     'blog.back': 'Todas las notas',
     'blog.feed': 'Blog de Kimün (RSS)',
     'blog.share': 'Comparte esta nota',
@@ -314,6 +315,7 @@ export const ui = {
     'blog.title': 'The Kimün blog',
     'blog.lead':
       'Notes on measuring code, the ideas behind each metric and what is changing in km.',
+    'blog.by': 'By',
     'blog.back': 'All posts',
     'blog.feed': 'The Kimün blog (RSS)',
     'blog.share': 'Share this post',
