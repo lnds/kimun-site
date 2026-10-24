@@ -2,6 +2,7 @@
 title: "Is Your Code LLM-Friendly?"
 description: "km map --color-by llm paints orange the code where an agent should struggle. We tested it with 47 bugs. On code the model already knew, orange barely mattered. On code it had never seen, orange cost a third more."
 date: 2026-10-23
+authors: [Madu, Edo. Díaz]
 image: /blog/is-your-code-llm-friendly/card-en.png
 ---
 

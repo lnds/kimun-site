@@ -2,6 +2,7 @@
 title: "¿Tu código es amistoso para un LLM?"
 description: "km map --color-by llm marca en naranja el código donde un agente debería sufrir. Lo pusimos a prueba con 47 errores: en código que el modelo ya conocía, el naranja casi no importó; en código nuevo para él, le costó un tercio más."
 date: 2026-10-23
+authors: [Madu, Edo. Díaz]
 image: /blog/is-your-code-llm-friendly/card-es.png
 ---
 
