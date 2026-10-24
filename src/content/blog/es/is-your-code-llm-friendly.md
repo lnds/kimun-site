@@ -131,6 +131,10 @@ Estas dos rondas nos dejaron dos preguntas, y en el próximo artículo mostrarem
 1. **¿Qué pasa cuando ninguna prueba ayuda?** En las dos rondas, una prueba le dijo al agente dónde mirar. Pero la suite de sc-cli no detectó 255 de los 304 mutantes que lanzó kalku. Con esos errores, el agente solo tendría un reporte del síntoma, y sospechamos que el naranja cobra mucho más.
 2. **¿Cuánto pesa la memoria?** sc-cli sugiere que bastante, pero cambiamos demasiadas cosas a la vez. Repetiremos la primera ronda con click, flask y black renombrados, para que el modelo no pueda reconocerlos. La nota de `km score` casi no cambia, porque Kimün mide la estructura y no los nombres.
 
+## Prueba Kimün
+
+Kimün es de código abierto (licencia MIT) y su código está en [github.com/lnds/kimun](https://github.com/lnds/kimun). Se instala con `cargo install kimun` o `brew install lnds/kimun/kimun`, y `km map --html mapa.html` dibuja el mapa de tu proyecto. Si te sirve, una estrella en el repositorio nos ayuda a que más gente lo encuentre; si algo falla o echas de menos algo, abre un issue.
+
 ---
 
 *Mapas hechos con Kimün 0.45. Datos y programas de las dos rondas en* [lnds/kimun-llm-experiment](https://github.com/lnds/kimun-llm-experiment).

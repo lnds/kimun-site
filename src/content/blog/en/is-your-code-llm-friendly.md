@@ -119,8 +119,8 @@ That lesson beats any threshold: **when an agent says the tests pass, trust, but
 
 Is your code LLM-friendly? Our answer: **friendly means cheap to understand**. Orange doesn't predict that the agent will fail. It shows where it'll charge you more, in tokens, in time and in wrong turns, once it has to understand instead of remember or follow a lead. With that in mind:
 
-1. **Cross the map with your history.** A orange file nobody touches costs nobody anything. One that changes every week, you pay for again and again. [`km map --color-by hotspots`](/en/docs/map/) and [`km hotspots`](/en/docs/hotspots/) show you which.
-2. **Invest in tests that shorten the distance** between symptom and cause. A test that points at the line makes even a orange file cheaper.
+1. **Cross the map with your history.** An orange file nobody touches costs nobody anything. One that changes every week, you pay for again and again. [`km map --color-by hotspots`](/en/docs/map/) and [`km hotspots`](/en/docs/hotspots/) show you which.
+2. **Invest in tests that shorten the distance** between symptom and cause. A test that points at the line makes even an orange file cheaper.
 3. **Measure the code your agents write.** sc-cli is what happens when nobody does: every change accepted without a look runs up the bill for the next agent that touches it.
 4. **Verify outside the agent**, with CI and a gate like [`km score --fail-if-worse`](/en/docs/score/), so code health doesn't slip without anyone noticing.
 
@@ -130,6 +130,10 @@ These two rounds left us with two questions, and in the next post we'll show the
 
 1. **What happens when no test helps?** In both rounds, a test told the agent where to look. But sc-cli's suite missed 255 of the 304 mutants kalku threw at it. With those bugs, the agent only gets a description of the symptom, and we suspect orange charges a lot more.
 2. **How much does memory matter?** sc-cli suggests quite a bit, but we changed too much at once. We'll rerun round one on click, flask and black with every name changed, so the model can't recognize them. The `km score` grade barely moves, because Kimün measures structure, not names.
+
+## Try Kimün
+
+Kimün is open source (MIT license), and the code lives at [github.com/lnds/kimun](https://github.com/lnds/kimun). Install it with `cargo install kimun` or `brew install lnds/kimun/kimun`, then run `km map --html map.html` to draw your own project. If it's useful to you, a star on the repo helps more people find it; if something breaks or you miss a feature, open an issue.
 
 ---
 
