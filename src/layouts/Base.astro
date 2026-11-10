@@ -26,6 +26,8 @@ const card = `${links.site}${image ?? '/og-1200x630.jpg'}`;
 const bare = Astro.url.pathname.replace(/^\/en(?=\/|$)/, '') || '/';
 const inEs = `${links.site}${bare}`;
 const inEn = `${links.site}/en${bare}`;
+// The redirect stays on the host serving the page, so a local server keeps it.
+const enPath = `/en${bare}`;
 ---
 
 <!doctype html>
@@ -65,7 +67,7 @@ const inEn = `${links.site}/en${bare}`;
     <meta name="twitter:image" content={card} />
 
     {lang === 'es' && (
-      <script is:inline define:vars={{ inEn }}>
+      <script is:inline define:vars={{ enPath }}>
         // A reader whose browser prefers English over Spanish gets the English
         // page, unless they chose Spanish with the language switch. Crawlers
         // stay, so each language keeps its own indexed pages.
@@ -79,7 +81,7 @@ const inEn = `${links.site}/en${bare}`;
           }
           var bot = /bot|crawl|spider|slurp|preview/i.test(navigator.userAgent);
           if (!bot && (chosen || first) === 'en') {
-            location.replace(inEn + location.search + location.hash);
+            location.replace(enPath + location.search + location.hash);
           }
         } catch (e) {
           /* localStorage unavailable: stay on this page */
