@@ -1,97 +1,118 @@
 ---
 title: "When No Test Sounds the Alarm"
-description: "Last time, a failing test always told the agent where to look. This time we took that away: bugs the suite can't catch and nothing but a symptom report. [PENDING: one line with the result.]"
-date: 2026-10-30
+description: "We took away the failing test and gave the agent nothing but a user's bug report. It fixed all 20 bugs at about the same cost, and orange code still took a bit more work. But first, our own test bench sold us a bill of goods."
+date: 2026-11-10
 authors: [Madu, Edo. Díaz]
+image: /blog/when-no-test-helps/card-en.png
 ---
 
-<!-- DRAFT. Figures marked [PENDING] come from the experiment, which hasn't run yet. -->
+`km map --color-by llm` draws your code as a map and colors each file by its Kimün grade, from 0 to 100: blue for files a model should understand without breaking a sweat, orange for the ones that will give it trouble because they're big, deeply nested and hard to follow. In [our last post](/en/blog/is-your-code-llm-friendly/) we put that map to the test with 47 bugs. On code the model already knew, orange barely mattered. On sc-cli, a project almost certainly missing from its training data, the agent burned a third more tokens on orange files.
 
-In [our last post](/en/blog/is-your-code-llm-friendly/), we put `km map --color-by llm` to the test with 47 bugs. On code the model already knew, orange barely mattered. On sc-cli, a project almost certainly missing from its training data, the agent burned a third more tokens on orange files.
+![Map of sc-cli: dominated by three orange circles, with a bit of blue in git/](/blog/when-no-test-helps/sc-cli.png)
 
-But both rounds had a crutch we didn't measure: **there was always a failing test**. The agent read the stack trace, grepped for the function and read about 40 lines. With a lead like that, file size hardly matters.
+But those rounds had a crutch we never measured: **there was always a failing test**. The agent read the stack trace, jumped to the function and read about 40 lines. With a lead like that, file size hardly matters.
 
-Real life doesn't always hand you a lead. A user reports something weird, no test fails, and somebody has to track down the cause. That's where hard-to-understand code should send the full bill.
+Real life doesn't always hand you a lead. A user reports that something acts weird, the suite is green, and someone has to track down the cause. We figured that's where a hard-to-read file would really hurt. It didn't, and before we could say so, we had to stop trusting our own numbers.
 
 ## The bugs the suite can't see
 
-When [kalku](https://kalku.tools/en/) threw 304 mutants at sc-cli, the suite killed 49. The other 255 survived: one-token changes (`<` for `<=`, `&&` for `||`, a different return value) that leave every test green. Each one is a bug that could be in production right now without anyone knowing.
+To find them we used [kalku](https://kalku.tools), our mutation testing tool. The idea is old and simple: kalku plants a small bug in the code on purpose, a *mutant*, and runs the suite. If some test fails, the suite killed the mutant. If every test passes, the mutant survives, and that exposes behavior no test is watching.
 
-| File | Score | Mutants | Survived |
-|---|---|---|---|
-| `git/mod.rs` | 99.5 | 44 | 41 |
-| `git/operations.rs` | 92.5 | [PENDING] | 4 |
-| `api/client.rs` | 57.3 | 60 | 53 |
-| `main.rs` | 30.7 | 60 | 57 |
-| `ui/mod.rs` | 15.3 | 60 | 43 |
+On sc-cli, most of them survived. They're one-token changes (`==` for `!=`, a `+ 1` for a `+ 2`, a negated condition) that keep every test green. Each one is a bug that could be in production today without anyone knowing.
 
-*[PENDING: check the `operations.rs` row; kalku's report lumps it with `config.rs` and `story_creator.rs`.]*
+| File | Lines | Grade | Mutants | Survived |
+|---|---|---|---|---|
+| `git/mod.rs` | 225 | 99.5 | 44 | 41 |
+| `git/operations.rs` | 591 | 92.5 | — | 4 |
+| `story_creator.rs` | 125 | 87.3 | — | 13 |
+| `api/client.rs` | 741 | 57.3 | 60 | 53 |
+| `main.rs` | 2,123 | 30.7 | 60 | 57 |
+| `ui/mod.rs` | 3,522 | 15.3 | 60 | 43 |
 
-Not all of them are usable. Some mutants are equivalent: they change the code but not the behavior, so no user could ever notice. For every survivor we picked, we wrote a test that catches it, and if we couldn't write one, we dropped it. That test stays hidden: the agent never sees it, and we use it at the end to check whether the fix is real.
+*kalku measured `operations.rs` and `story_creator.rs` together with `config.rs`: 80 mutants across the three, 61 survivors.*
+
+We picked 20 survivors, 10 in blue files (grade 85 or higher) and 10 in orange ones. Not all of them work: some mutants change the code but not what the user sees. For each one we wrote a test that catches it; if we couldn't write one, we dropped it. That test stays hidden: the agent never sees it, and we use it at the end to check whether the fix is right.
 
 ## How we measured it
 
-Same model and same setup as before: one isolated copy of the project per bug, with a fresh git history, and one agent (Claude Sonnet) per copy. What changes is what the agent gets. Instead of "this test fails," it gets a report like a user would write:
+Same model (Claude Sonnet) and same method as before: one isolated copy of the project per bug, with a fresh git history. What changes is what the agent gets. Instead of "this test fails," it gets a report like one a user would write:
 
-> *When I list stories with `--all`, the last page never shows up. I have 30 stories and I see 25.*
+> *`sc-cli branch 42` always tells me "Not a git repository. Please run this command from within a git repository.", no matter where I run it. I've tried a regular clone and a bare repository, and git recognizes both. Pressing `g` on a story in the TUI doesn't open the branch popup either.*
 
-*[PENDING: swap this example for a real report from the experiment.]*
+The report describes the symptom, not the cause: no file, no function, no line. We wrote it by looking only at how the mutated program behaves. The instructions tell the agent that no test reproduces the problem, that it may add tests of its own, and to stop once the suite passes.
 
-The report describes the symptom, not the cause: no file, no function, no line. We wrote it by looking only at how the mutated program behaves.
+For every run we checked three things: whether the hidden test passes, whether the rest of the suite passes, and what it cost.
 
-[PENDING: how many bugs landed in blue files and how many in orange ones.] For every trial, we checked three things:
+## Our first run sold us a bill of goods
 
-1. **Does the hidden test pass?** In other words, did the agent actually fix the bug?
-2. **Does the rest of the suite pass?** A fix that breaks something else doesn't count.
-3. **What did it cost?** Cumulative input tokens, tool calls and how much code the agent pulled into its context.
+We launched all 20 agents at once. The results looked like a headline: without a test, everything cost **nearly three times as much**, and orange cost 47% more, up from 33% before.
+
+Reading the sessions told a different story. Twenty copies compiling Rust at the same time will make anyone wait, and the agents waited badly. They kicked off `cargo test` in the background and then babysat it with `sleep` loops, or checked the process list to see whether it was done. Three of those loops asked `pgrep -f "cargo test"`, and since their own command line contained that text, they kept finding themselves: they went on waiting six hours after everything had finished.
+
+Every lap of that wait is one more turn, and every turn resends the whole context. The most expensive runs were the ones that waited the most.
+
+We reran the round with 4 agents at a time and one more line in the instructions: run every command in the foreground and don't look at other processes.
 
 ## Results
 
-| | Blue (n=[PENDING]) | Orange (n=[PENDING]) |
+| | With a failing test | No test (clean run) |
 |---|---|---|
-| Correct fix (hidden test passes) | [PENDING] | [PENDING] |
-| Broke something else | [PENDING] | [PENDING] |
-| Tool calls (median) | [PENDING] | [PENDING] |
-| Cumulative input tokens (median) | [PENDING] | [PENDING] |
+| Correct fix, blue | 10 of 10 | 10 of 10 |
+| Correct fix, orange | 11 of 12 | 10 of 10 |
+| Tools, blue / orange (median) | 6 / 8 | 6 / 7.5 |
+| Input tokens, blue / orange (median) | 356K / 473K | 370K / 436K |
+| Orange difference | +33% | +18% |
 
-[PENDING: the core paragraph. Two possible scripts, depending on the outcome:]
+**Without a test, the agent spent about the same as with one.** The tripling in the first run was all waiting. All 20 fixes were correct, none broke anything else, and in all 20 cases the agent undid exactly the mutation, in the right file. Each took between one and three minutes.
 
-- *If orange costs more:* without tests, the gap [grows from a third to PENDING]. The agent can't jump to the guilty line anymore. It has to trace the program until it finds where the behavior goes sideways, and in a 3,000-line file scoring 15, that's a long walk.
-- *If it doesn't:* surprise. [Explain how the agent found its way without tests: did it write its own tests? Use git? Read the whole file?]
+**Orange still cost more, just less than before.** In 71 out of 100 pairs, the orange bug cost more than the blue one. The gap between medians has a 5.4% chance of showing up by luck (permutation test), right at the edge of what we'd call convincing. On its own it proves nothing; next to the round with a failing test, which pointed the same way much more strongly, it shows a small, steady gap.
 
-[PENDING: one or two concrete cases, like `linegen.py` last time. What report it got, what it read, where it got lost, what it spent.]
+## The report is the lead
+
+How does an agent find a `!=` in 11,500 lines without a stack trace? By reading the report carefully.
+
+In the example above, the agent grepped for "Not a git repository," read the first 80 lines of `git/mod.rs`, saw the condition was backwards and flipped it. Five tool calls and 307K tokens. An error message quoted in a report does nearly the same job as a stack trace: it tells you where to look.
+
+When the report has no message, the road is longer. A user said that, when creating an epic, the popup did nothing when they pressed Enter. There's no text to search for, so the agent grepped for "epic" across the whole project, read 70 lines of `ui/mod.rs` and another 70 of `main.rs` to figure out who creates the epic, and only then found the negated condition. Nine tool calls and 510K tokens: 66% more than the `git/mod.rs` case.
+
+That's why the gap is small. The agent never reads a 3,500-line file end to end: it searches, reads a window and decides. An orange file costs it one or two more searches, not a full read. And since every turn resends about 55K tokens of base context, one extra search shows up in the token count even when it barely changes what the agent read.
 
 ## What the agent does with no lead
 
-[PENDING: whatever the transcripts show. Questions worth answering:]
+We had three questions, and the answers are clear:
 
-- Does it write a test that reproduces the symptom before touching the code, like a seasoned developer would?
-- How often does it "fix" something that wasn't the bug?
-- Does it claim success without reproducing the symptom? Last time, two agents said the tests passed without looking at the output.
+- **Does it write a test that reproduces the symptom before touching the code?** Not one of the 40 agents, across both runs, wrote a single test, even though the instructions allowed it. They read, search, fix and run the suite. One said it outright: it added no test because the code reads straight from standard input.
+- **Does it "fix" something that wasn't the bug?** None did. Every one changed only the mutated line.
+- **Does it claim success without checking the result?** Not this time: all of them filtered the suite's output and read the summary before stopping.
 
-## What CodeScene's study says
+The first one matters most to us: a fix without a regression test leaves the bug free to come back, and the agent won't write one unless you ask.
 
-In January, Markus Borg, Adam Tornhill and colleagues published [a study](https://arxiv.org/abs/2601.02200) on the same question, with a different task: they had several models refactor 5,000 Python programs and counted how often the tests broke. Mid-sized models broke healthy code 15% to 30% less often. Claude Code, on the other hand, broke about 5% in both groups. It played it so safe that it mostly just renamed variables.
+## What the CodeScene study says
 
-The two approaches fit together. They measure whether the agent breaks the code; we measure what it costs to fix it. And their own to-do list includes really bad code, since their sample had few files under 7 on Code Health. sc-cli has 87% of its lines under 70 on Kimün's scale.
+In January, Markus Borg, Adam Tornhill and coauthors published [a study](https://arxiv.org/abs/2601.02200) on a similar question with a different task: they had several models refactor 5,000 Python programs and counted how often they broke the tests. Mid-sized models broke healthy code 15% to 30% less often. Claude Code, on the other hand, broke about 5% in both groups: it played it so safe that it mostly just renamed variables.
+
+They measure whether the agent breaks code; we measure what it costs to fix it. And they leave really bad code for future work, since their sample had few files under 7 in Code Health. 87% of sc-cli's lines sit under 70 on Kimün's scale.
 
 ## What this experiment doesn't measure
 
-- **[PENDING] cases**, one run per bug, with a single model.
-- **Still one project**, with few distinct files.
-- **We wrote the reports.** A vaguer or sharper report could change the outcome, though we used the same style for all of them.
-- **A mutant is an artificial bug.** Real bugs tend to come from misunderstood requirements, not a `<` that should've been a `<=`.
+- **20 cases, one run per bug and a single model.** The orange gap is right at the limit of what these numbers can claim.
+- **Still a single project**, with six different files.
+- **We wrote the reports, and they're good ones.** Several quote error messages word for word. A vague report ("sometimes it doesn't work") could change the result, and that's the next variable we want to measure.
+- **A mutant is an artificial bug.** Real bugs usually come from misunderstood requirements, not from a `==` where a `!=` belongs.
 
 ## Takeaways
 
-[PENDING: two or three practical takeaways, depending on the result. Draft:]
+1. **A good bug report is worth almost as much as a failing test.** If the user pastes the error message, the agent gets to the line with one `grep`. Asking for reports with the exact text is the cheapest help there is, whether the fixer is a person or a model.
+2. **Orange always costs a little more.** Between 18% and 33% more tokens, depending on the lead. It's not a wall, but it adds up on a team that delegates a lot.
+3. **The agent doesn't leave tests behind.** If you want a regression test, ask for one. The mutants that survive kalku show exactly where one is missing.
+4. **Measure your test bench before you measure the agent.** Our first run was measuring machine contention, not code. Had we published those numbers, the headline would have been wrong.
 
-1. **Tests are the agent's map.** Without them, [whatever the data shows].
-2. **Run kalku before you turn an agent loose.** Surviving mutants mark the spots where an agent will be flying blind if something breaks there.
-3. **Orange code with no tests is the worst place to delegate blindly.** `km map --color-by llm` shows you where the orange is. Coverage and kalku show you where there's no safety net.
+In the next post we tackle the other question: **how much does memory matter?** We'll rerun round one on click, flask and black with every name changed, so the model can't recognize them.
 
-Next time we tackle the other question: **how much does memory matter?** We'll rerun round one on click, flask and black with every name changed, so the model can't recognize them.
+## Try Kimün
+
+Kimün is open source (MIT license), and the code lives at [github.com/lnds/kimun](https://github.com/lnds/kimun). Install it with `cargo install kimun` or `brew install lnds/kimun/kimun`, then run `km map --html map.html --color-by llm` to draw your own project. If it's useful to you, a star on the repo helps more people find it; if something breaks or you miss a feature, open an issue.
 
 ---
 
-*[PENDING: link to the data in lnds/kimun-llm-experiment.]*
+*Data, hidden tests, reports and scripts at* [lnds/kimun-llm-experiment](https://github.com/lnds/kimun-llm-experiment).
